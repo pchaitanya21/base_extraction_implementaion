@@ -16,7 +16,8 @@ you may need to create a job script, but here is an example of how to make it ru
 
 ```python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-160m --corpus-path monology/pile-uncopyrighted```
 
-## For Running Job Script on the Cluster
+## For Running Job Script on the Eddie Cluster
+(Think the cirus uses slurm so just has slightly different .sh file and submit through sbatch)
 
 ### ssh into the cluster: 
 
@@ -30,7 +31,7 @@ you may need to create a job script, but here is an example of how to make it ru
 
 ```nano job_script.sh```
 
-paste/edit the script (sample script is included as job_script.sh)
+paste/edit the script (sample script is included as eddie_job.sh)
 
 ### Save & Exit
 
@@ -40,4 +41,6 @@ Press `Ctrl + X` to exit nano
 
 ### Submit the Script 
 
-```sbatch job_script.sh```
+```qsub eddie_script.sh```
+
+```sbatch cirus_script.sh```

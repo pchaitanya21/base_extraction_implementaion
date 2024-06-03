@@ -1,34 +1,26 @@
 #!/bin/bash
-#SBATCH --job-name=carlini_attack
-#SBATCH --output=/exports/eddie/scratch/s2558433/carlini_attack_%j.log
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8 
-#SBATCH --mem=32G          
-#SBATCH --time=06:00:00     
-#SBATCH --partition=general 
+#$ -N base_extraction
+#$ -o /exports/eddie/scratch/s2558433/base_extraction_$JOB_ID.log
+#$ -e /exports/eddie/scratch/s2558433/base_extraction_$JOB_ID.err
+#$ -cwd
+#$ -pe sharedmem 16
+#$ -l h_vmem=4G
+#$ -l h_rt=12:00:00
 
+# Create /activate conda env if it doesn't exist
+source ~/miniconda3/etc/profile.d/conda.sh
 
-# Define variables
-SCRATCH_DIR="/exports/eddie/scratch/s2558433"
-REPO_URL="https://github.com/pchaitanya21/base_extraction_implementation.git"
-PROJECT_DIR="$SCRATCH_DIR/base_extraction_implementation"
-CONDA_DIR="$SCRATCH_DIR/miniconda3"
+if conda env list | grep -q "extract"; then
+    echo "Conda environment 'extract' already exists." #this echoes to the -o file ^^
+else
+    echo "Creating conda environment 'extract'."
+    conda create -y -n extract python=3.8
+    conda activate extract
+    pip install -r requirements.txt
+fi
 
-# Load Conda environment (assumes that there is miniconda env downloaded in space)
-source $CONDA_DIR/etc/profile.d/conda.sh
+# Change to the scratch directory
+cd /exports/eddie/scratch/s2558433/base_extraction_implementaion
 
-# Clone the repository
-git clone $REPO_URL $PROJECT_DIR
-
-# Create a new Conda environment and install dependencies
-conda create --prefix $SCRATCH_DIR/extract python=3.8 -y
-conda activate $SCRATCH_DIR/extract
-pip install -r $PROJECT_DIR/requirements.txt
-
-# Change to the project directory
-cd $PROJECT_DIR
-
-# Run the Python script
+# Run the main script
 python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-160m --corpus-path monology/pile-uncopyrighted
-
-conda deactivate
