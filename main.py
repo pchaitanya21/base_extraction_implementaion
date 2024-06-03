@@ -5,7 +5,7 @@ import torch
 import zlib
 import csv
 from datasets import load_dataset
-from transformers import GPT2Tokenizer, GPTNeoForCausalLM
+from transformers import GPTNeoXTokenizerFast, GPTNeoForCausalLM
 from tqdm import tqdm
 from model_utils import calculate_perplexity, print_best, device
 
@@ -19,7 +19,7 @@ def main(args):
     top_k = 40
 
     print("Loading models...")
-    tokenizer = GPT2Tokenizer.from_pretrained(args.model1)
+    tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
 
@@ -134,5 +134,3 @@ def parse_arguments(argv):
 if __name__ == '__main__':
     args = parse_arguments(sys.argv[1:])
     main(args)
-
-# python main.py --N 1000 --batch-size 10 --model1 EleutherAI/gpt-neo-2.4B --model2 EleutherAI/gpt-neo-125M --corpus-path EleutherAI/pile
