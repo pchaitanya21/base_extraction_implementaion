@@ -126,7 +126,6 @@ def parse_arguments(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--N', type=int, default=1000, help="Number of samples to generate")
     parser.add_argument('--batch-size', type=int, default=10, help="Batch size for generation")
-    parser.add_argument('--custom-sampling', action='store_true', help="Condition the generation using custom dataset.")
     parser.add_argument('--model1', type=str, required=True, help="Hugging Face model name for the first model")
     parser.add_argument('--model2', type=str, required=True, help="Hugging Face model name for the second model")
     parser.add_argument('--corpus-path', type=str, required=True, help="Path to the corpus dataset")
@@ -136,4 +135,4 @@ if __name__ == '__main__':
     args = parse_arguments(sys.argv[1:])
     main(args)
 
-# python main.py --N 1000 --batch-size 10 --custom-sampling --model1 EleutherAI/gpt-neo-1.3B --model2 EleutherAI/gpt-neo-125M --corpus-path EleutherAI/pile
+# python main.py --N 1000 --batch-size 10 --model1 EleutherAI/gpt-neo-2.4B --model2 EleutherAI/gpt-neo-125M --corpus-path EleutherAI/pile
