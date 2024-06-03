@@ -7,7 +7,7 @@ import csv
 from datasets import load_dataset
 from transformers import GPT2Tokenizer, GPTNeoForCausalLM
 from tqdm import tqdm
-from models_util import calculate_perplexity, print_best, device
+from model_utils import calculate_perplexity, print_best, device
 
 def main(args):
     print(f"Using device: {device}")
