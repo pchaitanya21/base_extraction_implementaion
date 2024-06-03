@@ -2,4 +2,5 @@ torch
 transformers
 numpy
 tqdm
+zstandard
 datasets
