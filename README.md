@@ -29,6 +29,7 @@ you may need to create a job script, but here is an example of how to make it ru
 
 ### create/overwrite job script
 
+#### Nano 
 ```nano job_script.sh```
 
 paste/edit the script (sample script is included as eddie_job.sh)
@@ -39,8 +40,23 @@ Press `Ctrl + O` to save the file.
 Press `Enter` to confirm the file name.
 Press `Ctrl + X` to exit nano
 
+
+#### Vim
+
+```vim job_script.sh```
+
+insert/make changes 
+`i`
+
+Normal mode `esc` 
+
+Save & Exit:  `:wq` and press `Enter`
+Force Quit w/o saving: `:q!`
+
+(if you cannot exit try clickig `esc` first to put you in normal mode)
+
 ### Submit the Script 
 
-```qsub eddie_script.sh```
+```qsub job_script.sh```
 
 ```sbatch cirus_script.sh```
