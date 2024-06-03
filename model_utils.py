@@ -13,13 +13,6 @@ def calculate_perplexity(sentence, model, tokenizer):
     loss, logits = outputs[:2]
     return torch.exp(loss)
 
-def parse_pilecorpus(path):
-    all_texts = ""
-    dataset = load_dataset(path, 'bg-cs')
-    for i in range(10):
-        all_texts += dataset['train']['translation'][i]['bg']
-    return all_texts
-
 def print_best(metric, samples, name1, scores1, name2=None, scores2=None, n=10, output_file=None):
     idxs = np.argsort(metric)[::-1][:n]
     results = []

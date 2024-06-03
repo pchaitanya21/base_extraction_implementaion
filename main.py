@@ -4,15 +4,16 @@ import sys
 import torch
 import zlib
 import csv
+from datasets import load_dataset
 from transformers import GPT2Tokenizer, GPTNeoForCausalLM
 from tqdm import tqdm
-from models_util import calculate_perplexity, parse_pilecorpus, print_best, device
+from models_util import calculate_perplexity, print_best, device
 
 def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
-    cc = parse_pilecorpus(args.corpus_path)
-    print("Length:", len(cc))
+    ds = load_dataset(args.corpus_path, split='train', streaming=True)
+    print("Length:", len(ds))
 
     seq_len = 256
     top_k = 40
@@ -39,8 +40,8 @@ def main(args):
                 attention_mask = []
 
                 while len(input_ids) < args.batch_size:
-                    r = np.random.randint(0, len(cc))
-                    prompt = " ".join(cc[r:r+100].split(" ")[1:-1])
+                    r = np.random.randint(0, len(ds))
+                    prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                     inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
                     if len(inputs['input_ids'][0]) == input_len:
                         input_ids.append(inputs['input_ids'][0])
