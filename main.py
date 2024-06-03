@@ -8,11 +8,13 @@ from datasets import load_dataset
 from transformers import GPTNeoXForCausalLM, AutoTokenizer
 from tqdm import tqdm
 from model_utils import calculate_perplexity, print_best, device
+from extraction import parse_pilecorpus
 
 def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
-    ds = load_dataset(args.corpus_path, split='train', streaming=True)
+    path="monology/pile-uncopyrighted"
+    ds= parse_pilecorpus(path)
     print("Length:", len(ds))
 
     seq_len = 256
