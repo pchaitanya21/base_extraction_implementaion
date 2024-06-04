@@ -37,27 +37,10 @@ def main(args):
     num_batches = int(np.ceil(args.N / args.batch_size))
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
-            if args.custom_sampling:
-                input_len = 10
-                input_ids = []
-                attention_mask = []
-
-                while len(input_ids) < args.batch_size:
-                    r = np.random.randint(0, len(ds))
-                    prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                    inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
-                    if len(inputs['input_ids'][0]) == input_len:
-                        input_ids.append(inputs['input_ids'][0])
-                        attention_mask.append(inputs['attention_mask'][0])
-
-                inputs = {'input_ids': torch.stack(input_ids), 
-                          'attention_mask': torch.stack(attention_mask)}
-
-                prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            else:
-                prompts = [""] * args.batch_size
-                input_len = 1
-                inputs = tokenizer(prompts, return_tensors="pt", padding=True)
+           
+            prompts = [""] * args.batch_size
+            input_len = 1
+            inputs = tokenizer(prompts, return_tensors="pt", padding=True)
 
             output_sequences = model1.generate(
                 input_ids=inputs['input_ids'].to(device),
