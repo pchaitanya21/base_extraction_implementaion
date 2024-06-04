@@ -5,7 +5,7 @@ import torch
 import zlib
 import csv
 from datasets import load_dataset
-from transformers import GPTNeoXForCausalLM, AutoTokenizer
+from transformers import GPTNeoXForCausalLM, AutoTokenizer, GPT2Tokenizer
 from tqdm import tqdm
 from model_utils import calculate_perplexity, print_best, device
 from extraction import parse_pilecorpus
@@ -22,7 +22,7 @@ def main(args):
 
     print("Loading models...")
     
-    tokenizer =  AutoTokenizer.from_pretrained(args.model1)
+    tokenizer = GPT2Tokenizer.from_pretrained(args.model1)
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
 
