@@ -41,7 +41,7 @@ def main(args):
             prompts = [""] * args.batch_size
             input_len = 1
             inputs = tokenizer(prompts, return_tensors="pt", padding=True)
-
+            print("Tokenizing the prompts:", len(inputs))    
             output_sequences = model1.generate(
                 input_ids=inputs['input_ids'].to(device),
                 attention_mask=inputs['attention_mask'].to(device),
