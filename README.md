@@ -60,3 +60,34 @@ Force Quit w/o saving: `:q!`
 ```qsub job_script.sh```
 
 ```sbatch cirus_script.sh```
+
+### Copying a file from the cluster to local 
+
+Sample, make sure that you are **NOT** logged into SSH. If you are open another locally or logout and then try. 
+```scp <youruun>@eddie.ecdf.ed.ac.uk:myfile.txt /some/local/directory```
+
+Ex: 
+```scp s2558433@eddie.ecdf.ed.ac.uk:/exports/eddie/scratch/s2558433/base_extraction_implementaion/output_scores_EleutherAI_pythia-2.8b_EleutherAI_pythia-160m.csv /Users/deals/Desktop```
+
+### More ways for Transfering data to and from Eddie
+Found [here](https://www.geos.ed.ac.uk/~smudd/LSDTT_docs/html/edin_instructions.html), it has more documentation for running scripts/all sorts of commands for Eddie Cluster
+
+You need to copy all the files needed to run your job on Eddie. To copy to and from the cluster, you need to use the secure copy command scp. Some examples of syntax are given below:
+
+Copy the file “myfile.txt” from your computer (the local host) to Eddie (the remote host):
+
+```scp myfile.txt <youruun>@eddie.ecdf.ed.ac.uk:/some/remote/directory```
+Copy the file “myfile.txt” from Eddie to the local host:
+
+```scp <youruun>@eddie.ecdf.ed.ac.uk:myfile.txt /some/local/directory```
+Copy the directory “mydir” from the local host to a remote host’s directory “fardir”:
+
+```scp -r mydir <youruun>@eddie.ecdf.ed.ac.uk:/some/remote/directory/fardir```
+Copy multiple files from the remote host to your current directory on the local host:
+
+```scp <youruun>@eddie.ecdf.ed.ac.uk:~/\{myfile1.txt,myfile2.txt\}```
+
+ .
+More examples can be found at http://www.hypexr.org/linux_scp_help.php. If a command is not working on Eddie, try it on the local host instead.
+
+
