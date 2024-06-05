@@ -43,6 +43,9 @@ def main(args):
             inputs = tokenizer(prompts, return_tensors="pt", padding=True)
             print("Length of prompt tensor:", len(inputs))    
             print(inputs)
+            print("Input IDs shape:", inputs['input_ids'].shape)
+            print("Attention Mask shape:", inputs['attention_mask'].shape)
+            
             output_sequences = model1.generate(
                 input_ids=inputs['input_ids'].to(device),
                 attention_mask=inputs['attention_mask'].to(device),
