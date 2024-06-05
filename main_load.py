@@ -13,7 +13,7 @@ from extraction import parse_pilecorpus, parse_swahili
 def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
-    path="sw.txt"
+    path="swa_sample.txt"
     ds= parse_swahili(path)
     print("Length:", len(ds))
 
