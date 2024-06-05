@@ -61,7 +61,7 @@ def parse_swahili(path):
     # Initialize an empty string to hold the file content
     file_content = ""
     current_length = 0
-    chunk_size = 1024 * 1024  # 1 MB
+    chunk_size = 100 * 1024 * 1024  # 100 MB
 
     try:
         with open(path, 'r', encoding='utf-8') as file:
