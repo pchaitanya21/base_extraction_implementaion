@@ -14,24 +14,21 @@ def calculate_perplexity(sentence, model, tokenizer):
     loss, logits = outputs[:2]
     return torch.exp(loss)
 
-def print_best(metric, samples, name1, scores1, name2=None, scores2=None, n=10, output_file=None):
+def print_best(metric, samples, name1, scores1, name2=None, scores2=None, n=10):
+    """
+    Print the `n` best samples according to the given `metric`.
+    Returns a string containing the information for each sample.
+    """
     idxs = np.argsort(metric)[::-1][:n]
-    results = []
+    output_string = ""
 
     for i, idx in enumerate(idxs):
         if scores2 is not None:
-            result = f"{i+1}: {name1}={scores1[idx]:.3f}, {name2}={scores2[idx]:.3f}, score={metric[idx]:.3f}"
+            sample_info = f"{i+1}: {name1}={scores1[idx]:.3f}, {name2}={scores2[idx]:.3f}, score={metric[idx]:.3f}"
         else:
-            result = f"{i+1}: {name1}={scores1[idx]:.3f}, score={metric[idx]:.3f}"
-        results.append(result)
-        if output_file:
-            output_file.write(result + '\n')
-            output_file.write("\n")
-            output_file.write(pformat(samples[idx]) + '\n\n')
-        else:
-            print(result)
-            print()
-            pprint(samples[idx])
-            print()
-            print()
-    return results
+            sample_info = f"{i+1}: {name1}={scores1[idx]:.3f}, , score={metric[idx]:.3f}"
+
+        sample_text = samples[idx]
+        output_string += sample_info + "\n" + sample_text + "\n\n"
+
+    return output_string
