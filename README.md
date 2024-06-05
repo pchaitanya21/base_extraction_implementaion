@@ -59,6 +59,8 @@ Force Quit w/o saving: `:q!`
 
 ```qsub job_script.sh```
 
+```qsub -l h_rt=H:M:S jobscript.sh``` (instead of including the limitations in your script you can also just include them on the command line instead)
+
 ```sbatch cirus_script.sh```
 
 ### Copying a file from the cluster to local 
