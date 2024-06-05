@@ -54,6 +54,35 @@ def print_best(metric, samples, name1, scores1, name2=None, scores2=None, n=10):
         print()
         
 #here wet_file="monology/pile-uncopyrighted"
+#use this format to read data from a file location and parse as data. 
+def parse_swahili(path):
+    target_length = 5530188676
+
+    # Initialize an empty string to hold the file content
+    file_content = ""
+    current_length = 0
+    chunk_size = 100 * 1024 * 1024  # 100 MB
+
+    try:
+        with open(path, 'r', encoding='utf-8') as file:
+            while current_length < target_length:
+                chunk = file.read(min(chunk_size, target_length - current_length))
+                if not chunk:
+                    break  # End of file reached
+                file_content += chunk
+                current_length += len(chunk)
+        print("File read successfully.")
+    except FileNotFoundError:
+        print(f"The file at {path} was not found.")
+    except IOError as e:
+        print(f"An error occurred while reading the file at {path}: {e}")    
+    
+    
+    return file_content
+    
+    # all_texts = ""
+    # for text in dataset_head:
+    #     all_texts+= text['text']
 def parse_pilecorpus(path):
     """
     Quick and ugly parsing of a WET file.
