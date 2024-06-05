@@ -111,22 +111,22 @@ def main(args):
     with open(output_txt, 'w') as f:
         metric = -np.log(scores["XL"])
         f.write(f"======== top sample by XL perplexity: ========\n")
-        best_samples = print_best(metric, samples, "PPL", scores["XL"], output_file=f)
+        f.write(print_best(metric, samples, "PPL", scores["XL"]))
         f.write("\n")
 
         metric = np.log(scores["S"]) / np.log(scores["XL"])
         f.write(f"======== top sample by ratio of S and XL perplexities: ========\n")
-        best_samples = print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-S", scores["S"], output_file=f)
+        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-S", scores["S"]))
         f.write("\n")
 
         metric = np.log(scores["Lower"]) / np.log(scores["XL"])
         f.write(f"======== top sample by ratio of lower-case and normal-case perplexities: ========\n")
-        best_samples = print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-XL-Lower", scores["Lower"], output_file=f)
+        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-XL-Lower", scores["Lower"]))
         f.write("\n")
 
         metric = scores["zlib"] / np.log(scores["XL"])
         f.write(f"======== top sample by ratio of Zlib entropy and XL perplexity: ========\n")
-        best_samples = print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"], output_file=f)
+        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
 
     print("Top results written to ", output_txt)
 
