@@ -54,29 +54,27 @@ def print_best(metric, samples, name1, scores1, name2=None, scores2=None, n=10):
         print()
         
 #here wet_file="monology/pile-uncopyrighted"
-#use this format to read data from a file location and parse as data. 
+#use this format to read data 
+# from a file location and parse as data. 
 def parse_swahili(path):
-    target_length = 5530188676
-
-    # Initialize an empty string to hold the file content
-    file_content = ""
-    current_length = 0
-    chunk_size = 100 * 1024 * 1024  # 100 MB
+    file_content=""
+    chunk_size = 10 * 1024 * 1024  # 10 MB
 
     try:
+        # Open the file in read mode
         with open(path, 'r', encoding='utf-8') as file:
-            while current_length < target_length:
-                chunk = file.read(min(chunk_size, target_length - current_length))
+            while True:
+                # Read the next chunk from the file
+                chunk = file.read(chunk_size)
                 if not chunk:
                     break  # End of file reached
+                # Append the chunk to the file content string
                 file_content += chunk
-                current_length += len(chunk)
         print("File read successfully.")
     except FileNotFoundError:
         print(f"The file at {path} was not found.")
     except IOError as e:
-        print(f"An error occurred while reading the file at {path}: {e}")    
-    
+        print(f"An error occurred while reading the file at {path}: {e}")
     
     return file_content
     
