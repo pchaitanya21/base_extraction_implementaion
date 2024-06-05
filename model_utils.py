@@ -1,7 +1,8 @@
 import torch
 from datasets import load_dataset
 import numpy as np
-from pprint import pprint
+from pprint import pprint, pformat
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -26,8 +27,7 @@ def print_best(metric, samples, name1, scores1, name2=None, scores2=None, n=10, 
         if output_file:
             output_file.write(result + '\n')
             output_file.write("\n")
-            output_file.write(pprint(samples[idx]))
-            output_file.write("\n\n")
+            output_file.write(pformat(samples[idx]) + '\n\n')
         else:
             print(result)
             print()
