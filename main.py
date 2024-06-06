@@ -32,6 +32,7 @@ def main(args):
     model2.eval()
 
     samples = []
+    prompts_list = []
     scores = {"XL": [], "S": [], "Lower": [], "zlib": []}
 
     num_batches = int(np.ceil(args.N / args.batch_size))
@@ -82,6 +83,7 @@ def main(args):
                 zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
 
                 samples.append(text)
+                prompts_list.append(prompts)
                 scores["XL"].append(p1)
                 scores["S"].append(p2)
                 scores["Lower"].append(p_lower)
@@ -99,11 +101,11 @@ def main(args):
     
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
-        fieldnames = ['sample', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
+        fieldnames = ['sample', 'prompt','PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample, xl, s, lower, zlib_ in zip(samples, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
-            writer.writerow({'sample': sample, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+        for sample, prompt, xl, s, lower, zlib_ in zip(samples, prompts_list, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
+            writer.writerow({'sample': sample, 'prompt': prompt,'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
 
     print("Results saved to ", output_csv)
 
