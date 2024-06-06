@@ -16,7 +16,7 @@ def main(args):
     path="monology/pile-uncopyrighted"
     ds= parse_pilecorpus(path)
     print("Length:", len(ds))
-
+    print("Sanity check of data:",ds[:200])
     seq_len = 256
     top_k = 40
 
