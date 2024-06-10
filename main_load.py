@@ -46,8 +46,15 @@ def main(args):
             while len(input_ids) < args.batch_size:
                 # Sample random text from the Pile corpus
                 r = np.random.randint(0, len(ds))
+                print("The sample of dataset is:", ds[:1000])
+                print("*"*100)
+                print("The index Selected is:", r)
                 prompt = " ".join(ds[r].split()[:100])
-                print("The untruncated prompt example:",prompt)
+                words = ds.split()
+                
+                print(" ".join(words[r+1:r+101]))
+                print("The untruncated prompt is:",prompt)
+
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
                 if len(inputs['input_ids'][0]) == input_len:
@@ -85,14 +92,15 @@ def main(args):
 
                 samples.append(text)
                 prompts_list.append(prompts)
-                print("Prompt List has the following prompts:",prompts_list[:5])
+                
                 scores["XL"].append(p1)
                 scores["S"].append(p2)
                 scores["Lower"].append(p_lower)
                 scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
-
+    # print("*"*100)
+    # print("Prompt List has the following prompts:",prompts_list)
     scores["XL"] = np.asarray(scores["XL"])
     scores["S"] = np.asarray(scores["S"])
     scores["Lower"] = np.asarray(scores["Lower"])
