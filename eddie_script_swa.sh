@@ -12,7 +12,7 @@ source /exports/eddie/scratch/s2558433/miniconda3/etc/profile.d/conda.sh
 
 cd /exports/eddie/scratch/s2558433/base_extraction_implementaion
 
-conda activate extract
+conda activate myenv
 
 pip install -r requirements.txt
 
