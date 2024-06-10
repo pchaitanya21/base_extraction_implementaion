@@ -16,7 +16,7 @@ def main(args):
     path="swa_sample.txt"
     ds= parse_swahili(path)
     print("Length:", len(ds))
-    print("Sanity check of data:",ds[:200])
+    # print("Sanity check of data:",ds[:200])
     seq_len = 256
     top_k = 40
 
@@ -47,7 +47,7 @@ def main(args):
                 # Sample random text from the Pile corpus
                 r = np.random.randint(0, len(ds))
                 prompt = " ".join(ds[r].split()[:100])
-
+                print("The untruncated prompt example:",prompt)
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
                 if len(inputs['input_ids'][0]) == input_len:
@@ -59,7 +59,7 @@ def main(args):
 
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            print("Adding some sample prompts to check:", prompts[:200])
+            print("Sample truncated prompt to check:", prompts)
             print("*"*100)
             print("Length of prompt tensor:", len(inputs))    
             print(inputs)
