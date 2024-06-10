@@ -59,7 +59,8 @@ def main(args):
 
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            
+            print("Adding some sample prompts to check:", prompts[:200])
+            print("*"*100)
             print("Length of prompt tensor:", len(inputs))    
             print(inputs)
             print("Input IDs shape:", inputs['input_ids'].shape)
@@ -84,6 +85,7 @@ def main(args):
 
                 samples.append(text)
                 prompts_list.append(prompts)
+                print("Prompt List has the following prompts:",prompts_list[:5])
                 scores["XL"].append(p1)
                 scores["S"].append(p2)
                 scores["Lower"].append(p_lower)
