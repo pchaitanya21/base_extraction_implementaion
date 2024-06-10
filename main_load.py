@@ -86,7 +86,7 @@ def main(args):
             )
 
             texts = tokenizer.batch_decode(output_sequences, skip_special_tokens=True)
-
+            prompts_list.append(prompts)
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
                 p2 = calculate_perplexity(text, model2, tokenizer)
@@ -94,7 +94,7 @@ def main(args):
                 zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
 
                 samples.append(text)
-                prompts_list.append(prompts)
+                
                 
                 scores["XL"].append(p1)
                 scores["S"].append(p2)
@@ -103,7 +103,7 @@ def main(args):
                 
             pbar.update(args.batch_size)
     print("*"*100)
-    print("Prompt List has the following prompts:",prompts_list[0][1])
+    print("Prompt List has the following prompts:",prompts_list)
     scores["XL"] = np.asarray(scores["XL"])
     scores["S"] = np.asarray(scores["S"])
     scores["Lower"] = np.asarray(scores["Lower"])
