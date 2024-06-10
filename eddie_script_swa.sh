@@ -1,7 +1,7 @@
 #!/bin/bash
 #$ -N base_extraction
-#$ -o /exports/eddie/scratch/s2558433/base_extraction_$JOB_ID.log
-#$ -e /exports/eddie/scratch/s2558433/base_extraction_$JOB_ID.err
+#$ -o /exports/eddie/scratch/s2605274/base_extraction_$JOB_ID.log
+#$ -e /exports/eddie/scratch/s2605274/base_extraction_$JOB_ID.err
 #$ -cwd
 #$ -pe sharedmem 16
 #$ -l h_vmem=4G
@@ -17,4 +17,4 @@ conda activate extract
 pip install -r requirements.txt
 
 # Run the main script
-python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-160m --corpus-path monology/pile-uncopyrighted
+python main_load.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --corpus-path swa_sample.txt
