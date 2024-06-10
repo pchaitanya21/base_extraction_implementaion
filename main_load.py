@@ -16,7 +16,8 @@ def main(args):
     path="swa_sample.txt"
     ds= parse_swahili(path)
     print("Length:", len(ds))
-    # print("Sanity check of data:",ds[:200])
+    print("The sample of dataset is:", ds[:1000])
+   
     seq_len = 256
     top_k = 40
 
@@ -36,6 +37,7 @@ def main(args):
     scores = {"XL": [], "S": [], "Lower": [], "zlib": []}
 
     num_batches = int(np.ceil(args.N / args.batch_size))
+    
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             
@@ -46,14 +48,14 @@ def main(args):
             while len(input_ids) < args.batch_size:
                 # Sample random text from the Pile corpus
                 r = np.random.randint(0, len(ds))
-                print("The sample of dataset is:", ds[:1000])
+                
                 print("*"*100)
                 print("The index Selected is:", r)
-                prompt = " ".join(ds[r].split()[:100])
+                # prompt = " ".join(ds[r].split()[:100])
                 words = ds.split()
                 
-                print(" ".join(words[r+1:r+101]))
-                print("The untruncated prompt is:",prompt)
+                prompt= " ".join(words[r+1:r+101])
+                # print("The untruncated prompt is:",prompt)
 
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
@@ -68,9 +70,9 @@ def main(args):
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
             print("Sample truncated prompt to check:", prompts)
             print("*"*100)
-            print("Length of prompt tensor:", len(inputs))    
-            print(inputs)
-            print("Input IDs shape:", inputs['input_ids'].shape)
+            # print("Length of prompt tensor:", len(inputs))    
+            # print(inputs)
+            # print("Input IDs shape:", inputs['input_ids'].shape)
             print("Attention Mask shape:", inputs['attention_mask'].shape)
 
             output_sequences = model1.generate(
