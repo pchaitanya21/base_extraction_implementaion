@@ -52,10 +52,11 @@ def main(args):
                 print("*"*100)
                 print("The index Selected is:", r)
                 # prompt = " ".join(ds[r].split()[:100])
-                words = ds.split()
+                # words = ds.split()
+                prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
+                # prompt= " ".join(words[r+1:r+101])
                 
-                prompt= " ".join(words[r+1:r+101])
-                # print("The untruncated prompt is:",prompt)
+                print("The untruncated prompt is:",prompt)
 
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
@@ -101,8 +102,8 @@ def main(args):
                 scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
-    # print("*"*100)
-    # print("Prompt List has the following prompts:",prompts_list)
+    print("*"*100)
+    print("Prompt List has the following prompts:",prompts_list)
     scores["XL"] = np.asarray(scores["XL"])
     scores["S"] = np.asarray(scores["S"])
     scores["Lower"] = np.asarray(scores["Lower"])
