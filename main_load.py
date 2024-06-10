@@ -49,14 +49,14 @@ def main(args):
                 # Sample random text from the Pile corpus
                 r = np.random.randint(0, len(ds))
                 
-                print("*"*100)
-                print("The index Selected is:", r)
+                # print("*"*100)
+                # print("The index Selected is:", r)
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                 
                 
-                print("The untruncated prompt is:",prompt)
+                # print("The untruncated prompt is:",prompt)
 
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
