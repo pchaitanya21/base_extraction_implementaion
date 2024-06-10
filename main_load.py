@@ -51,10 +51,10 @@ def main(args):
                 
                 print("*"*100)
                 print("The index Selected is:", r)
-                # prompt = " ".join(ds[r].split()[:100])
-                # words = ds.split()
+                
+                
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                # prompt= " ".join(words[r+1:r+101])
+                
                 
                 print("The untruncated prompt is:",prompt)
 
@@ -69,8 +69,8 @@ def main(args):
 
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            print("Sample truncated prompt to check:", prompts)
-            print("*"*100)
+            # print("Sample truncated prompt to check:", prompts)
+            # print("*"*100)
             # print("Length of prompt tensor:", len(inputs))    
             # print(inputs)
             # print("Input IDs shape:", inputs['input_ids'].shape)
@@ -103,7 +103,7 @@ def main(args):
                 
             pbar.update(args.batch_size)
     print("*"*100)
-    print("Prompt List has the following prompts:",prompts_list)
+    print("Prompt List has the following prompts:",prompts_list[0][1])
     scores["XL"] = np.asarray(scores["XL"])
     scores["S"] = np.asarray(scores["S"])
     scores["Lower"] = np.asarray(scores["Lower"])
