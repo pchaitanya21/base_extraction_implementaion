@@ -10,6 +10,9 @@ from tqdm import tqdm
 from model_utils import calculate_perplexity, print_best, device
 from extraction import parse_pilecorpus, parse_swahili
 
+
+
+
 def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
@@ -26,12 +29,12 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(args.model1)
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
-
+      
     model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
     model1.config.pad_token_id = model1.config.eos_token_id
     model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     model2.eval()
-
+    
     samples = []
     prompts_list = []
     scores = {"XL": [], "S": [], "Lower": [], "zlib": []}
