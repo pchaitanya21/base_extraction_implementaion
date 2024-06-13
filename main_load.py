@@ -56,8 +56,9 @@ def main(args):
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                 print("The prompt is:", prompt)
-            
+                
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
+
                 # print("The untruncated prompt is:",prompt)
                 print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
@@ -65,7 +66,7 @@ def main(args):
                 if len(inputs['input_ids'][0]) == input_len:
                     input_ids.append(inputs['input_ids'][0])
                     attention_mask.append(inputs['attention_mask'][0])
-
+            # print("The input_ids are:", input_ids) 
             inputs = {'input_ids': torch.stack(input_ids), 
                       'attention_mask': torch.stack(attention_mask)}
 
