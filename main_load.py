@@ -16,7 +16,7 @@ def main(args):
     path="swa_sample.txt"
     ds= parse_swahili(path)
     print("Length:", len(ds))
-    print("The sample of dataset is:", ds[:1000])
+    # print("The sample of dataset is:", ds[:1000])
    
     seq_len = 256
     top_k = 1000
@@ -151,6 +151,9 @@ def main(args):
         metric = scores["zlib"] / np.log(scores["XL"])
         f.write(f"======== top sample by ratio of Zlib entropy and XL perplexity: ========\n")
         f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
+
+        f.write(f"======== Percentage of memorization is: ========\n")
+        f.write(print(memorization))
 
     print("Top results written to ", output_txt)
 
