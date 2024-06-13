@@ -91,8 +91,8 @@ def main(args):
             prompts_list.append(prompts)
             print("The prompt list is:", prompts_list[0][:2])
             prompt_suffix.append(prompt_suff)
-            print("The prompt suffix is:", prompt_suffix[0][:2])
-            print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix[0]))
+            print("The prompt suffix is:", prompt_suffix[:2])
+            print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix))
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
                 p2 = calculate_perplexity(text, model2, tokenizer)
