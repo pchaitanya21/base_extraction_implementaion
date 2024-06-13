@@ -154,7 +154,7 @@ def main(args):
         f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
 
         f.write(f"======== Percentage of memorization is: ========\n")
-        f.write(print(memorization))
+        f.write(f"========{memorization}")
 
     print("Top results written to ", output_txt)
 
