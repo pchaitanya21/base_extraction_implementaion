@@ -108,8 +108,8 @@ def main(args):
                 scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
-    print("*"*100)
-    print("Prompt List has the following prompts:",len(prompts_list[0]))
+    # print("*"*100)
+    # print("Prompt List has the following prompts:",len(prompts_list[0]))
     scores["XL"] = np.asarray(scores["XL"])
     scores["S"] = np.asarray(scores["S"])
     scores["Lower"] = np.asarray(scores["Lower"])
@@ -118,8 +118,8 @@ def main(args):
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
     sample_test = [s[:200] for s in samples]
-    print("The samples examples are :", samples[:2])
-    print("The samples test are :", sample_test[:2])
+    # print("The samples examples are :", samples[:2])
+    # print("The samples test are :", sample_test[:2])
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
@@ -137,7 +137,7 @@ def main(args):
             writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
 
     print("Results saved to ", output_csv)
-
+    
     output_txt = f'output_results_{model1_name}_{model2_name}.txt'
     with open(output_txt, 'w') as f:
         metric = -np.log(scores["XL"])
