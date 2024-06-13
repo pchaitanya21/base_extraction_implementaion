@@ -13,8 +13,8 @@ from extraction import parse_pilecorpus, parse_swahili
 def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
-    path="swa_sample.txt"
-    ds= parse_swahili(path)
+    # path="swa_sample.txt"
+    ds= parse_swahili(args.corpus_path)
     print("Length:", len(ds))
     # print("The sample of dataset is:", ds[:1000])
    
@@ -126,8 +126,8 @@ def main(args):
         fieldnames = ['sample', 'prompt', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample,prompt,suff, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix[0], scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
-            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff,'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix[0], comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
+            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
 
     print("Results saved to ", output_csv)
 
