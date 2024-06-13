@@ -125,7 +125,9 @@ def main(args):
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
     print("The memorization rate is:", memorization)
-
+    print("THE prompt suffix_1 is:", prompt_suffix[0])
+    print("THE prompt suffix_2 is:", prompt_suffix)
+    print("THE prompt suffix_3 is:", prompt_suffix[0][1])
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
