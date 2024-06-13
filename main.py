@@ -18,6 +18,7 @@ def main(args):
     print("Length:", len(ds))
    
     seq_len = 256
+    
     top_k = 40
 
     print("Loading models...")
