@@ -5,6 +5,7 @@ import torch
 import zlib
 import csv
 import pandas as pd
+import transformers.generation.logits_process
 from datasets import load_dataset
 from transformers import GPTNeoXForCausalLM, AutoTokenizer
 from transformers.generation_logits_process import LogitsProcessor, LogitsProcessorList
