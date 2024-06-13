@@ -31,7 +31,6 @@ def main(args):
     model1.config.pad_token_id = model1.config.eos_token_id
     model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     model2.eval()
-    
     samples = []
     prompts_list = []
     prompt_suffix=[]
@@ -42,11 +41,11 @@ def main(args):
     
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
-            
+        
             input_len = 10
             input_ids = []
             attention_mask = []
-
+            
             while len(input_ids) < args.batch_size:
                 # Sample random text from the Pile corpus
                 r = np.random.randint(0, len(ds))
@@ -56,10 +55,11 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                
+                print("The prompt is:", prompt)
+            
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 # print("The untruncated prompt is:",prompt)
-
+                print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
                 if len(inputs['input_ids'][0]) == input_len:
@@ -92,7 +92,7 @@ def main(args):
             # print("The prompt list is:", prompts_list[0][:2])
             prompt_suffix.append(prompt_suff)
             # print("The prompt suffix is:", prompt_suffix[0][:2])
-            print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix[0]))
+            # print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix[0]))
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
                 p2 = calculate_perplexity(text, model2, tokenizer)
@@ -117,17 +117,21 @@ def main(args):
 
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
+         
     sample_test = [s[:200] for s in samples]
+    
+    sample_test = [s[:2000]]
     # print("The samples examples are :", samples[:2])
     # print("The samples test are :", sample_test[:2])
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
-    print("The memorization rate is:", memorization)
-    print("THE prompt suffix_1 is:", prompt_suffix[0])
-    print("THE prompt suffix_2 is:", prompt_suffix)
-    print("THE prompt suffix_3 is:", prompt_suffix[0][1])
+    
+    # print("The memorization rate is:", memorization)
+    # print("THE prompt suffix_1 is:", prompt_suffix[0])
+    # print("THE prompt suffix_2 is:", prompt_suffix)
+    # print("THE prompt suffix_3 is:", prompt_suffix[0][1])
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
