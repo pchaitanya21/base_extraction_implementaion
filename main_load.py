@@ -90,7 +90,7 @@ def main(args):
             texts = tokenizer.batch_decode(output_sequences, skip_special_tokens=True)
             prompts_list.append(prompts)
             prompt_suffix.append(prompt_suff)
-            print("len of prompts and suffix list:", len(prompts_list), len(prompt_suffix))
+            print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix[0]))
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
                 p2 = calculate_perplexity(text, model2, tokenizer)
@@ -124,7 +124,7 @@ def main(args):
 
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
-        fieldnames = ['sample', 'prompt', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
+        fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix[0], comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
