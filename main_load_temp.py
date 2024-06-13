@@ -5,10 +5,10 @@ import torch
 import zlib
 import csv
 import pandas as pd
-import transformers.generation.logits_process
+import transformers.generation_logits_process
 from datasets import load_dataset
 from transformers import GPTNeoXForCausalLM, AutoTokenizer
-from transformers.generation.logits_process import LogitsProcessor, LogitsProcessorList
+from transformers.generation_logits_process import LogitsProcessor, LogitsProcessorList
 from tqdm import tqdm
 from model_utils import calculate_perplexity, print_best, device
 from extraction import parse_pilecorpus, parse_swahili
