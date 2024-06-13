@@ -115,8 +115,8 @@ def main(args):
 
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
-    
-    comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(samples, prompt_suff)]
+    sample_test = [s[:200] for s in samples]
+    comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
