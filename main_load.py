@@ -58,7 +58,7 @@ def main(args):
                 print("The prompt is:", prompt)
                 
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
-
+                
                 # print("The untruncated prompt is:",prompt)
                 print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
@@ -99,7 +99,7 @@ def main(args):
                 p2 = calculate_perplexity(text, model2, tokenizer)
                 p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
                 zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
-
+                
                 samples.append(text)
                 
                 
@@ -118,21 +118,17 @@ def main(args):
 
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
-         
+
+    print("samples", samples)
+    print("sample_test", sample_test)
     sample_test = [s[:200] for s in samples]
     
-    sample_test = [s[:2000]]
-    # print("The samples examples are :", samples[:2])
-    # print("The samples test are :", sample_test[:2])
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
     
-    # print("The memorization rate is:", memorization)
-    # print("THE prompt suffix_1 is:", prompt_suffix[0])
-    # print("THE prompt suffix_2 is:", prompt_suffix)
-    # print("THE prompt suffix_3 is:", prompt_suffix[0][1])
+    
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
