@@ -120,9 +120,9 @@ def main(args):
     model2_name = args.model2.replace("/", "_")
 
     print("samples", samples)
-    print("sample_test", sample_test)
+
     sample_test = [s[:200] for s in samples]
-    
+    print("sample_test", sample_test)
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
