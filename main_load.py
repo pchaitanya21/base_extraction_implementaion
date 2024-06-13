@@ -19,7 +19,7 @@ def main(args):
     print("The sample of dataset is:", ds[:1000])
    
     seq_len = 256
-    top_k = 40
+    top_k = 1000
 
     print("Loading models...")
     
@@ -34,7 +34,9 @@ def main(args):
     
     samples = []
     prompts_list = []
-    scores = {"XL": [], "S": [], "Lower": [], "zlib": []}
+    prompt_suffix=[]
+
+    scores = {"mem":[], "XL": [], "S": [], "Lower": [], "zlib": []}
 
     num_batches = int(np.ceil(args.N / args.batch_size))
     
@@ -55,7 +57,7 @@ def main(args):
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                 
-                
+                prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 # print("The untruncated prompt is:",prompt)
 
                 # Tokenize the prompt ensuring consistent input lengths
@@ -87,6 +89,8 @@ def main(args):
 
             texts = tokenizer.batch_decode(output_sequences, skip_special_tokens=True)
             prompts_list.append(prompts)
+            prompt_suffix.append(prompt_suff)
+            print("len of prompts and suffix list:", len(prompts_list), len(prompt_suffix))
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
                 p2 = calculate_perplexity(text, model2, tokenizer)
@@ -103,7 +107,7 @@ def main(args):
                 
             pbar.update(args.batch_size)
     print("*"*100)
-    print("Prompt List has the following prompts:",prompts_list[0])
+    print("Prompt List has the following prompts:",len(prompts_list[0]))
     scores["XL"] = np.asarray(scores["XL"])
     scores["S"] = np.asarray(scores["S"])
     scores["Lower"] = np.asarray(scores["Lower"])
@@ -111,14 +115,19 @@ def main(args):
 
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
-    
+    comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(samples, prompt_suff)]
+    ones_count = sum(comparison_result)
+    total_count = len(comparison_result)
+    memorization = (ones_count / total_count) * 100
+    print("The memorization rate is:", memorization)
+
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample,prompt, xl, s, lower, zlib_ in zip(samples, prompts_list[0], scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
-            writer.writerow({'sample': sample, 'prompt': prompt,'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+        for sample,prompt,suff, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix[0], scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
+            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff,'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
 
     print("Results saved to ", output_csv)
 
