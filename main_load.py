@@ -55,30 +55,30 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                print("The prompt is:", prompt)
+                # print("The prompt is:", prompt)
                 
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 
                 # print("The untruncated prompt is:",prompt)
-                print("The prompt suffix is: ", prompt_suff)
+                # print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
+            
+                prompt_suffix.append(prompt_suff)
+                
                 if len(inputs['input_ids'][0]) == input_len:
                     input_ids.append(inputs['input_ids'][0])
                     attention_mask.append(inputs['attention_mask'][0])
             # print("The input_ids are:", input_ids) 
             inputs = {'input_ids': torch.stack(input_ids), 
                       'attention_mask': torch.stack(attention_mask)}
-
+            
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            # print("Sample truncated prompt to check:", prompts)
-            # print("*"*100)
-            # print("Length of prompt tensor:", len(inputs))    
-            # print(inputs)
-            # print("Input IDs shape:", inputs['input_ids'].shape)
+            
+            
             print("Attention Mask shape:", inputs['attention_mask'].shape)
-
+        
             output_sequences = model1.generate(
                 input_ids=inputs['input_ids'].to(device),
                 attention_mask=inputs['attention_mask'].to(device),
@@ -90,8 +90,9 @@ def main(args):
 
             texts = tokenizer.batch_decode(output_sequences, skip_special_tokens=True)
             prompts_list.append(prompts)
+            print
             # print("The prompt list is:", prompts_list[0][:2])
-            prompt_suffix.append(prompt_suff)
+            
             # print("The prompt suffix is:", prompt_suffix[0][:2])
             # print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix[0]))
             for text in texts:
