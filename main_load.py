@@ -65,7 +65,7 @@ def main(args):
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
             
                 prompt_suffix.append(prompt_suff)
-                
+
                 if len(inputs['input_ids'][0]) == input_len:
                     input_ids.append(inputs['input_ids'][0])
                     attention_mask.append(inputs['attention_mask'][0])
@@ -120,10 +120,10 @@ def main(args):
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
 
-    print("samples", samples)
-
+    
+    print("The samples are :", samples[0])
     sample_test = [s[:200] for s in samples]
-    print("sample_test", sample_test)
+    print("sample_test of the first few 200", sample_test)
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
