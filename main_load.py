@@ -142,7 +142,7 @@ def main(args):
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix[0], comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
+        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
             writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
 
     print("Results saved to ", output_csv)
