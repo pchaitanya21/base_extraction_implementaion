@@ -90,7 +90,7 @@ def main(args):
 
             texts = tokenizer.batch_decode(output_sequences, skip_special_tokens=True)
             prompts_list.append(prompts)
-            print
+        
             # print("The prompt list is:", prompts_list[0][:2])
             
             # print("The prompt suffix is:", prompt_suffix[0][:2])
@@ -121,13 +121,16 @@ def main(args):
     model2_name = args.model2.replace("/", "_")
 
     
-    print("The samples are :", samples)
+   
     
     sample_test = [s[:200] for s in samples]
-    print("the length of samples", len(samples))
-    print("*"*100)
+    
+    
     print("sample_test of the first few 200", sample_test)
     print("the length of sample_test", len(sample_test))
+    print("*"*100)
+    print("prompt_suffix is :", prompt_suffix)
+    print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
