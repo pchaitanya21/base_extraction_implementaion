@@ -121,9 +121,11 @@ def main(args):
     model2_name = args.model2.replace("/", "_")
 
     
-    print("The samples are :", samples[0])
+    print("The samples are :", samples)
     sample_test = [s[:200] for s in samples]
+    print("the length of samples", len(samples))
     print("sample_test of the first few 200", sample_test)
+    print("the length of sample_test", len(sample_test))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
