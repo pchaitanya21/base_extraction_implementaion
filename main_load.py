@@ -136,8 +136,8 @@ def main(args):
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
-    print("Prompt Suffix is:", prompt_suffix)
-    print(" Prompt Suff is :", prompt_suff)
+    # print("Prompt Suffix is:", prompt_suffix)
+    
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
     # print("The prompt list at the end is:", prompts_list)
