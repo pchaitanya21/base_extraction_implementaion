@@ -132,18 +132,21 @@ def main(args):
     # print("prompt_suffix is :", prompt_suffix)
     # print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
-    print("The comparison length is:", len(comparison_result))
+    # print("The comparison length is:", len(comparison_result))
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
+    print("Sample test is:", sample_test)
+    print(" Prompt Suffix is :", prompt_suff)
     print("Memorization is: "  , memorization)
-    print("The prompt list at the end is:", prompts_list)
+    prompts_list = [item for sublist in prompts_list for item in sublist]
+    # print("The prompt list at the end is:", prompts_list)
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list[0], prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
+        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list, prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
             writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
 
     print("Results saved to ", output_csv)
