@@ -132,7 +132,7 @@ def main(args):
     # print("prompt_suffix is :", prompt_suffix)
     # print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
-    print("The comparison result is:", len(comparison_result))
+    print("The comparison length is:", len(comparison_result))
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
