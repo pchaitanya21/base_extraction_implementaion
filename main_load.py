@@ -19,7 +19,7 @@ def main(args):
     # print("The sample of dataset is:", ds[:1000])
    
     seq_len = 256
-    top_k = 1000
+    # top_k = 1000
 
     print("Loading models...")
     
@@ -84,7 +84,7 @@ def main(args):
                 attention_mask=inputs['attention_mask'].to(device),
                 max_length=input_len + seq_len,
                 do_sample=True, 
-                top_k=top_k, 
+                # top_k=top_k, 
                 top_p=1.0
             )
 
@@ -94,7 +94,7 @@ def main(args):
             # print("The prompt list is:", prompts_list[0][:2])
             
             # print("The prompt suffix is:", prompt_suffix[0][:2])
-            # print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix[0]))
+            print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix))
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
                 p2 = calculate_perplexity(text, model2, tokenizer)
@@ -132,6 +132,7 @@ def main(args):
     # print("prompt_suffix is :", prompt_suffix)
     # print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suff)]
+    print("The comparison result is:", len(comparison_result))
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
