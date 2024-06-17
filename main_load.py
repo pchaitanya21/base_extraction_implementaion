@@ -164,31 +164,31 @@ def main(args):
 
     print("Results saved to ", output_csv)
     
-    output_txt = f'output_results_{model1_name}_{model2_name}.txt'
-    with open(output_txt, 'w') as f:
-        metric = -np.log(scores["XL"])
-        f.write(f"======== top sample by XL perplexity: ========\n")
-        f.write(print_best(metric, samples, "PPL", scores["XL"]))
-        f.write("\n")
+    # output_txt = f'output_results_{model1_name}_{model2_name}.txt'
+    # with open(output_txt, 'w') as f:
+    #     metric = -np.log(scores["XL"])
+    #     f.write(f"======== top sample by XL perplexity: ========\n")
+    #     f.write(print_best(metric, samples, "PPL", scores["XL"]))
+    #     f.write("\n")
 
-        metric = np.log(scores["S"]) / np.log(scores["XL"])
-        f.write(f"======== top sample by ratio of S and XL perplexities: ========\n")
-        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-S", scores["S"]))
-        f.write("\n")
+    #     metric = np.log(scores["S"]) / np.log(scores["XL"])
+    #     f.write(f"======== top sample by ratio of S and XL perplexities: ========\n")
+    #     f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-S", scores["S"]))
+    #     f.write("\n")
 
-        metric = np.log(scores["Lower"]) / np.log(scores["XL"])
-        f.write(f"======== top sample by ratio of lower-case and normal-case perplexities: ========\n")
-        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-XL-Lower", scores["Lower"]))
-        f.write("\n")
+    #     metric = np.log(scores["Lower"]) / np.log(scores["XL"])
+    #     f.write(f"======== top sample by ratio of lower-case and normal-case perplexities: ========\n")
+    #     f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-XL-Lower", scores["Lower"]))
+    #     f.write("\n")
 
-        metric = scores["zlib"] / np.log(scores["XL"])
-        f.write(f"======== top sample by ratio of Zlib entropy and XL perplexity: ========\n")
-        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
+    #     metric = scores["zlib"] / np.log(scores["XL"])
+    #     f.write(f"======== top sample by ratio of Zlib entropy and XL perplexity: ========\n")
+    #     f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
 
-        f.write(f"======== Percentage of memorization is: ========\n")
-        f.write(f"========{memorization}")
+    #     f.write(f"======== Percentage of memorization is: ========\n")
+    #     f.write(f"========{memorization}")
 
-    print("Top results written to ", output_txt)
+    # print("Top results written to ", output_txt)
 
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
