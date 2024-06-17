@@ -149,9 +149,9 @@ def main(args):
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
     # print("*"*100)
-    # print("All prompts are:", prompts_list)
+    print("Number of prompts are:", len(prompts_list))
     # print("*"*100)
-    # print("Prompt Suffix is:", prompt_suffix)
+    print("Number of Prompt Suffix are:", len(prompt_suffix))
 
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     
