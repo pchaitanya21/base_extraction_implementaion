@@ -14,7 +14,8 @@ def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
     # path="swa_sample.txt"
-    ds= parse_swahili(args.corpus_path)
+    # ds= parse_swahili(args.corpus_path)
+    ds= parse_pilecorpus(args.corpus_path)
     print("Length:", len(ds))
     # print("The sample of dataset is:", ds[:1000])
    
@@ -23,8 +24,8 @@ def main(args):
 
     print("Loading models...")
     
-    # tokenizer = AutoTokenizer.from_pretrained(args.model1)
-    tokenizer = GPT2Tokenizer.from_pretrained(args.model1)
+    tokenizer = AutoTokenizer.from_pretrained(args.model1)
+    # tokenizer = GPT2Tokenizer.from_pretrained(args.model1)
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
 
@@ -34,14 +35,15 @@ def main(args):
     # model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     # model2.eval() 
     #for pythia 
-    # model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
-    # model1.config.pad_token_id = model1.config.eos_token_id
-    # model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
-    # model2.eval()
-    model1 = GPTNeoForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
     model1.config.pad_token_id = model1.config.eos_token_id
-    model2 = GPTNeoForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     model2.eval()
+    #for gpt-neo
+    # model1 = GPTNeoForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    # model1.config.pad_token_id = model1.config.eos_token_id
+    # model2 = GPTNeoForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    # model2.eval()
 
     samples = []
     prompts_list = []
