@@ -60,7 +60,7 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                # print("The prompt is:", prompt)
+                print("The length of a prompt is:", len(prompt))
                 
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 
@@ -68,7 +68,7 @@ def main(args):
                 # print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
-            
+                print("the lenght of tokenized prompt is:", len(inputs))
                 prompt_suffix.append(prompt_suff)
 
                 if len(inputs['input_ids'][0]) == input_len:
@@ -80,7 +80,7 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            
+            print("The truncated prompt length is:", len(prompts))
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
         
@@ -137,16 +137,21 @@ def main(args):
     # print("prompt_suffix is :", prompt_suffix)
     # print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suffix)]
-    # print("The comparison length is:", len(comparison_result))
+    print("The comparison list length is:", len(comparison_result))
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
-    # print("Prompt Suffix is:", prompt_suffix)
+    
     
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
-    # print("The prompt list at the end is:", prompts_list)
+    print("*"*100)
+    print("All prompts are:", prompts_list)
+    print("*"*100)
+    print("Prompt Suffix is:", prompt_suffix)
+
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
+    
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
