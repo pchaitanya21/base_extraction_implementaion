@@ -104,26 +104,26 @@ def main(args):
             # print("The prompt suffix is:", prompt_suffix[0][:2])
             # print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix))
             for text in texts:
-                p1 = calculate_perplexity(text, model1, tokenizer)
-                p2 = calculate_perplexity(text, model2, tokenizer)
-                p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
-                zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
+                # p1 = calculate_perplexity(text, model1, tokenizer)
+                # p2 = calculate_perplexity(text, model2, tokenizer)
+                # p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
+                # zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
                 
                 samples.append(text)
                 
                 
-                scores["XL"].append(p1)
-                scores["S"].append(p2)
-                scores["Lower"].append(p_lower)
-                scores["zlib"].append(zlib_entropy)
+                # scores["XL"].append(p1)
+                # scores["S"].append(p2)
+                # scores["Lower"].append(p_lower)
+                # scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
     # print("*"*100)
     # print("Prompt List has the following prompts:",len(prompts_list[0]))
-    scores["XL"] = np.asarray(scores["XL"])
-    scores["S"] = np.asarray(scores["S"])
-    scores["Lower"] = np.asarray(scores["Lower"])
-    scores["zlib"] = np.asarray(scores["zlib"])
+    # scores["XL"] = np.asarray(scores["XL"])
+    # scores["S"] = np.asarray(scores["S"])
+    # scores["Lower"] = np.asarray(scores["Lower"])
+    # scores["zlib"] = np.asarray(scores["zlib"])
 
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
@@ -156,11 +156,11 @@ def main(args):
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     
     with open(output_csv, 'w', newline='') as csvfile:
-        fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
+        fieldnames = ['sample', 'prompt', 'suffix', 'memorized']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list, prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
-            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+        for sample,prompt,suff, mem in zip(samples, prompts_list, prompt_suffix, comparison_result):
+            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem})
 
     print("Results saved to ", output_csv)
     
