@@ -5,7 +5,7 @@ import torch
 import zlib
 import csv
 from datasets import load_dataset
-from transformers import GPTNeoXForCausalLM, AutoTokenizer, AutoModelForCausalLM
+from transformers import GPTNeoXForCausalLM, GPTNeoForCausalLM, GPT2Tokenizer, AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
 from model_utils import calculate_perplexity, print_best, device
 from extraction import parse_pilecorpus, parse_swahili
@@ -23,7 +23,8 @@ def main(args):
 
     print("Loading models...")
     
-    tokenizer = AutoTokenizer.from_pretrained(args.model1)
+    # tokenizer = AutoTokenizer.from_pretrained(args.model1)
+    tokenizer = GPT2Tokenizer.from_pretrained(args.model1)
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
 
@@ -32,10 +33,16 @@ def main(args):
     # model1.config.pad_token_id = model1.config.eos_token_id
     # model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     # model2.eval() 
-    model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    #for pythia 
+    # model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    # model1.config.pad_token_id = model1.config.eos_token_id
+    # model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    # model2.eval()
+    model1 = GPTNeoForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
     model1.config.pad_token_id = model1.config.eos_token_id
-    model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    model2 = GPTNeoForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     model2.eval()
+
     samples = []
     prompts_list = []
     prompt_suffix=[]
