@@ -17,4 +17,5 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --corpus-path swa_sample.txt
+# python main_load.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --corpus-path swa_sample.txt
+python main_load.py --N 1000 --batch-size 10 --model1 UBC-NLP/serengeti --model2 UBC-NLP/serengeti-E110 --corpus-path swa_sample.txt
