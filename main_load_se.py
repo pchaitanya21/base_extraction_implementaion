@@ -28,14 +28,14 @@ def main(args):
     tokenizer.pad_token = tokenizer.eos_token
 
     #add the SERENGETI model changes here:  
-    # model1 = AutoModelForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
-    # model1.config.pad_token_id = model1.config.eos_token_id
-    # model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
-    # model2.eval() 
-    model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    model1 = AutoModelForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
     model1.config.pad_token_id = model1.config.eos_token_id
-    model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
-    model2.eval()
+    model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    model2.eval() 
+    # model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    # model1.config.pad_token_id = model1.config.eos_token_id
+    # model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    # model2.eval()
     samples = []
     prompts_list = []
     prompt_suffix=[]
@@ -104,26 +104,26 @@ def main(args):
             # print("The prompt suffix is:", prompt_suffix[0][:2])
             # print("len of prompts and suffix list:", len(prompts_list[0]), len(prompt_suffix))
             for text in texts:
-                p1 = calculate_perplexity(text, model1, tokenizer)
-                p2 = calculate_perplexity(text, model2, tokenizer)
-                p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
-                zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
+                # p1 = calculate_perplexity(text, model1, tokenizer)
+                # p2 = calculate_perplexity(text, model2, tokenizer)
+                # p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
+                # zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
                 
                 samples.append(text)
                 
                 
-                scores["XL"].append(p1)
-                scores["S"].append(p2)
-                scores["Lower"].append(p_lower)
-                scores["zlib"].append(zlib_entropy)
+                # scores["XL"].append(p1)
+                # scores["S"].append(p2)
+                # scores["Lower"].append(p_lower)
+                # scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
     # print("*"*100)
     # print("Prompt List has the following prompts:",len(prompts_list[0]))
-    scores["XL"] = np.asarray(scores["XL"])
-    scores["S"] = np.asarray(scores["S"])
-    scores["Lower"] = np.asarray(scores["Lower"])
-    scores["zlib"] = np.asarray(scores["zlib"])
+    # scores["XL"] = np.asarray(scores["XL"])
+    # scores["S"] = np.asarray(scores["S"])
+    # scores["Lower"] = np.asarray(scores["Lower"])
+    # scores["zlib"] = np.asarray(scores["zlib"])
 
     model1_name = args.model1.replace("/", "_")
     model2_name = args.model2.replace("/", "_")
@@ -156,39 +156,39 @@ def main(args):
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     
     with open(output_csv, 'w', newline='') as csvfile:
-        fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
+        fieldnames = ['sample', 'prompt', 'suffix', 'memorized']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list, prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
-            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+        for sample,prompt,suff, mem in zip(samples, prompts_list, prompt_suffix, comparison_result):
+            writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem})
 
     print("Results saved to ", output_csv)
     
-    output_txt = f'output_results_{model1_name}_{model2_name}.txt'
-    with open(output_txt, 'w') as f:
-        metric = -np.log(scores["XL"])
-        f.write(f"======== top sample by XL perplexity: ========\n")
-        f.write(print_best(metric, samples, "PPL", scores["XL"]))
-        f.write("\n")
+    # output_txt = f'output_results_{model1_name}_{model2_name}.txt'
+    # with open(output_txt, 'w') as f:
+    #     metric = -np.log(scores["XL"])
+    #     f.write(f"======== top sample by XL perplexity: ========\n")
+    #     f.write(print_best(metric, samples, "PPL", scores["XL"]))
+    #     f.write("\n")
 
-        metric = np.log(scores["S"]) / np.log(scores["XL"])
-        f.write(f"======== top sample by ratio of S and XL perplexities: ========\n")
-        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-S", scores["S"]))
-        f.write("\n")
+    #     metric = np.log(scores["S"]) / np.log(scores["XL"])
+    #     f.write(f"======== top sample by ratio of S and XL perplexities: ========\n")
+    #     f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-S", scores["S"]))
+    #     f.write("\n")
 
-        metric = np.log(scores["Lower"]) / np.log(scores["XL"])
-        f.write(f"======== top sample by ratio of lower-case and normal-case perplexities: ========\n")
-        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-XL-Lower", scores["Lower"]))
-        f.write("\n")
+    #     metric = np.log(scores["Lower"]) / np.log(scores["XL"])
+    #     f.write(f"======== top sample by ratio of lower-case and normal-case perplexities: ========\n")
+    #     f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "PPL-XL-Lower", scores["Lower"]))
+    #     f.write("\n")
 
-        metric = scores["zlib"] / np.log(scores["XL"])
-        f.write(f"======== top sample by ratio of Zlib entropy and XL perplexity: ========\n")
-        f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
+    #     metric = scores["zlib"] / np.log(scores["XL"])
+    #     f.write(f"======== top sample by ratio of Zlib entropy and XL perplexity: ========\n")
+    #     f.write(print_best(metric, samples, "PPL-XL", scores["XL"], "Zlib", scores["zlib"]))
 
-        f.write(f"======== Percentage of memorization is: ========\n")
-        f.write(f"========{memorization}")
+    #     f.write(f"======== Percentage of memorization is: ========\n")
+    #     f.write(f"========{memorization}")
 
-    print("Top results written to ", output_txt)
+    # print("Top results written to ", output_txt)
 
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
