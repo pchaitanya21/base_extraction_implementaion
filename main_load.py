@@ -60,8 +60,8 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                print("The length of a prompt is:", len(prompt))
-                print(prompt)
+                # print("The length of a prompt is:", len(prompt))
+                # print(prompt)
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 
                 # print("The untruncated prompt is:",prompt)
@@ -69,8 +69,8 @@ def main(args):
                 # Tokenize the prompt ensuring consistent input lengths
                 #removed padding="max_length"
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
-                print("the lenght of tokenized prompt is:", len(inputs))
-                print(inputs)
+                # print("the lenght of tokenized prompt is:", len(inputs))
+                # print(inputs)
                 prompt_suffix.append(prompt_suff)
 
                 if len(inputs['input_ids'][0]) == input_len:
@@ -82,8 +82,8 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            print("The truncated prompt length is:", len(prompts))
-            print(prompts)
+            # print("The truncated prompt length is:", len(prompts))
+            # print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
         
@@ -148,10 +148,10 @@ def main(args):
     
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
-    print("*"*100)
-    print("All prompts are:", prompts_list)
-    print("*"*100)
-    print("Prompt Suffix is:", prompt_suffix)
+    # print("*"*100)
+    # print("All prompts are:", prompts_list)
+    # print("*"*100)
+    # print("Prompt Suffix is:", prompt_suffix)
 
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     
