@@ -69,6 +69,7 @@ def main(args):
                 # Tokenize the prompt ensuring consistent input lengths
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True, padding="max_length")
                 print("the lenght of tokenized prompt is:", len(inputs))
+                print(inputs)
                 prompt_suffix.append(prompt_suff)
 
                 if len(inputs['input_ids'][0]) == input_len:
@@ -81,6 +82,7 @@ def main(args):
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
             print("The truncated prompt length is:", len(prompts))
+            print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
         
