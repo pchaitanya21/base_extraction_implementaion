@@ -11,6 +11,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL      
 #SBATCH --mail-user=s2605274@ed.ac.uk  
 # Create / activate conda env if it doesn't exist
+#SBATCH --account=tc062
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
