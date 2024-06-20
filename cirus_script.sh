@@ -11,6 +11,8 @@
 #SBATCH --mail-type=BEGIN,END,FAIL      
 #SBATCH --mail-user=s2605274@ed.ac.uk  
 # Create / activate conda env if it doesn't exist
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
 export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
 export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
