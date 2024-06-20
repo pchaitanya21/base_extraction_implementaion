@@ -7,7 +7,7 @@
 #SBATCH --time=96:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=3
 
 
 #SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
@@ -33,7 +33,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load.py --N 1000 --batch-size 10 --model1  EleutherAI/pythia-6.9b --model2  EleutherAI/pythia-6.9b --corpus-path swa_sample.txt
+python main_load.py --N 10000 --batch-size 10 --model1  EleutherAI/pythia-6.9b --model2  EleutherAI/pythia-6.9b --corpus-path swa_sample.txt
 
 # Deactivate conda environment
-conda deactivate
+# conda deactivate
