@@ -1,33 +1,34 @@
 #!/bin/bash
-#SBATCH --job-name=base_extraction
-#SBATCH --output=/exports/eddie/scratch/s2558433/base_extraction_%j.log
+
+#SBATCH --job-name=pythia-2.8b
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
+#SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=16G
-#SBATCH --time=02:00:00
-#SBATCH --partition=general
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
+#SBATCH --mail-type=BEGIN,END,FAIL      
+#SBATCH --mail-user=s2605274@ed.ac.uk  
+# Create / activate conda env if it doesn't exist
 
-# Define variables
-SCRATCH_DIR="/exports/eddie/scratch/s2558433"
-REPO_URL="https://github.com/pchaitanya21/base_extraction_implementation.git"
-PROJECT_DIR="$SCRATCH_DIR/base_extraction_implementation"
-CONDA_DIR="$SCRATCH_DIR/miniconda3"
+export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
+export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
+export HF_DATASETS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/datasets"
 
-# Load Conda environment
-source $CONDA_DIR/etc/profile.d/conda.sh
+source /work/tc062/tc062/s2605274/miniconda3/etc/profile.d/conda.sh
 
-# Clone the repository
-git clone $REPO_URL $PROJECT_DIR
+# Change to the working directory
+cd /exports/eddie/scratch/s2558433/base_extraction_implementaion/
 
-# Create a new Conda environment and install dependencies
-conda create --prefix $SCRATCH_DIR/extract python=3.8 -y
-conda activate $SCRATCH_DIR/extract
-pip install -r $PROJECT_DIR/requirements.txt
+# Activate conda environment
+conda activate myenv
 
-# Change to the project directory
-cd $PROJECT_DIR
+# Install required packages
+pip install -r requirements.txt
 
-# Run the Python script
-python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-160m --corpus-path monology/pile-uncopyrighted
+# Run the main script
+python main_load.py --N 1000 --batch-size 10 --model1  EleutherAI/pythia-6.9b --model2  EleutherAI/pythia-6.9b --corpus-path swa_sample.txt
 
-conda deactivate
+# Deactivate conda environment
+conda deactivate
