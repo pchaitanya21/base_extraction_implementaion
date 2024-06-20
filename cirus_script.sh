@@ -3,7 +3,7 @@
 #SBATCH --job-name=pythia
 #SBATCH --partition=standard
 #SBATCH --qos=standard
-#SBATCH --account=tc063--pool3
+#SBATCH --account=tc062--pool3
 #SBATCH --time=96:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
