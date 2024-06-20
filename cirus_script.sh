@@ -4,6 +4,7 @@
 #SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
 #SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
+#SBATCH --exclusive
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=12G
