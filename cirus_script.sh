@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pythia-2.8b
+#SBATCH --job-name=pythia
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 #SBATCH --account=tc062
@@ -10,8 +10,8 @@
 #SBATCH --cpus-per-task=1
 
 
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 #SBATCH --mail-type=BEGIN,END,FAIL      
 #SBATCH --mail-user=s2605274@ed.ac.uk  
