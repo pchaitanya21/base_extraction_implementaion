@@ -69,10 +69,10 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                print("The length of a prompt is:", len(prompt))
-                # print(prompt)
+                # print("The length of a prompt is:", len(prompt))
+                print(prompt)
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
-                print("The length of the suffix is: ", len(prompt_suff))
+                # print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
                 # print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
@@ -91,7 +91,7 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            print("The truncated prompt list is:", prompts)
+            # print("The truncated prompt list is:", prompts)
             # print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
@@ -142,10 +142,10 @@ def main(args):
     
     sample_test = [s[:200] for s in samples]
     
-    print("*"*100)
-    print("sample_test examples are:", sample_test)
-    print("*"*100)
-    print("prompt suffix examples are:", prompt_suffix)
+    # print("*"*100)
+    # print("sample_test examples are:", sample_test)
+    # print("*"*100)
+    # print("prompt suffix examples are:", prompt_suffix)
     # print("the length of sample_test", len(sample_test))
     # print("*"*100)
     # print("prompt_suffix is :", prompt_suffix)
