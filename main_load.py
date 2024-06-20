@@ -55,8 +55,8 @@ def main(args):
     
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
-            #changed from 10 to 100
-            input_len = 100
+            #changed from 10 to 100 breaks the code? 
+            input_len = 10
             input_ids = []
             attention_mask = []
             
@@ -77,7 +77,7 @@ def main(args):
                 # print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
                 #removed padding="max_length" and max_length=input_len,
-                inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len,  truncation=True)
+                inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
                 # print("the lenght of tokenized prompt is:", len(inputs))
                 # print(inputs)
                 prompt_suffix.append(prompt_suff)
@@ -91,8 +91,8 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            print("The truncated prompt list is:", len(prompts))
-            print(prompts)
+            print("The truncated prompt list is:", prompts)
+            # print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
         
