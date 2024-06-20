@@ -7,7 +7,7 @@
 #SBATCH --time=96:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=4
 
 
 #SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
