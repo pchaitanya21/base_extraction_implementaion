@@ -21,7 +21,7 @@ def main(args):
    
     seq_len = 256
     # top_k = 1000
-
+    
     print("Loading models...")
     
     tokenizer = AutoTokenizer.from_pretrained(args.model1)
@@ -69,7 +69,7 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                # print("The length of a prompt is:", len(prompt))
+                print("The length of a prompt is:", len(prompt))
                 # print(prompt)
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 
@@ -92,7 +92,7 @@ def main(args):
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
             # print("The truncated prompt length is:", len(prompts))
-            # print(prompts)
+            print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
         
