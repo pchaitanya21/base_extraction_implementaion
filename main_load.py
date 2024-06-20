@@ -71,7 +71,7 @@ def main(args):
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                 print("The length of a prompt is:", len(prompt))
                 # print(prompt)
-                prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
+                prompt_suff=  " ".join(ds[r+100:r+200].split(" ")[1:-1])
                 print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
                 # print("The prompt suffix is: ", prompt_suff)
@@ -140,7 +140,7 @@ def main(args):
     
    
     
-    sample_test = [s[:200] for s in samples]
+    sample_test = [s[100:200] for s in samples]
     
     print("*"*100)
     print("sample_test examples are:", sample_test)
