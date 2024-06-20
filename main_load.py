@@ -71,13 +71,13 @@ def main(args):
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                 print("The length of a prompt is:", len(prompt))
                 # print(prompt)
-                prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
-                
+                prompt_suff=  " ".join(ds[r+100:r+200].split(" ")[1:-1])
+                print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
                 # print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
-                #removed padding="max_length"
-                inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
+                #removed padding="max_length" and max_length=input_len,
+                inputs = tokenizer(prompt, return_tensors="pt",  truncation=True)
                 # print("the lenght of tokenized prompt is:", len(inputs))
                 # print(inputs)
                 prompt_suffix.append(prompt_suff)
@@ -91,7 +91,7 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            # print("The truncated prompt length is:", len(prompts))
+            print("The truncated prompt list is:", len(prompts))
             print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
