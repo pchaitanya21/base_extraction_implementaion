@@ -77,7 +77,7 @@ def main(args):
                 # print("The prompt suffix is: ", prompt_suff)
                 # Tokenize the prompt ensuring consistent input lengths
                 #removed padding="max_length" and max_length=input_len,
-                inputs = tokenizer(prompt, return_tensors="pt",  truncation=True)
+                inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len,  truncation=True)
                 # print("the lenght of tokenized prompt is:", len(inputs))
                 # print(inputs)
                 prompt_suffix.append(prompt_suff)
