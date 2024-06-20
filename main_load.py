@@ -70,7 +70,7 @@ def main(args):
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
                 # print("The length of a prompt is:", len(prompt))
-                print(prompt)
+                # print(prompt)
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
                 # print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
