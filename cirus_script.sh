@@ -21,7 +21,7 @@ export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
 export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
 export HF_DATASETS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/datasets"
 
-source ~/.bashrc
+source /work/tc062/tc062/s2605274/Miniconda3/etc/profile.d/conda.sh
 
 # Change to the working directory
 cd /work/tc062/tc062/s2605274/base_extraction_implementaion/

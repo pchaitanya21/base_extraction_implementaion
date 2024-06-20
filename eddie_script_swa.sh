@@ -8,7 +8,7 @@
 #$ -l h_rt=12:00:00
 
 # Create /activate conda env if it doesn't exist
-source /exports/eddie/scratch/s2605274/miniconda3/etc/profile.d/conda.sh
+source /exports/eddie/scratch/s2605274/Miniconda3/etc/profile.d/conda.sh
 
 cd /exports/eddie/scratch/s2605274/base_extraction_implementaion
 
