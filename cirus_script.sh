@@ -1,16 +1,19 @@
 #!/bin/bash
 
 #SBATCH --job-name=pythia-2.8b
+#SBATCH --time=0:20:0
+#SBATCH --exclusive
+#SBATCH --nodes=4
+#SBATCH --ntasks=8
+#SBATCH --tasks-per-node=2
+#SBATCH --cpus-per-task=18
+
 #SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
 #SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
-#SBATCH --exclusive
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=12G
-#SBATCH --time=6:00:00
 #SBATCH --mail-type=BEGIN,END,FAIL      
 #SBATCH --mail-user=s2605274@ed.ac.uk  
+
 # Create / activate conda env if it doesn't exist
 #SBATCH --account=tc062
 #SBATCH --partition=standard
