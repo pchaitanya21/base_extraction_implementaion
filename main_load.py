@@ -142,8 +142,10 @@ def main(args):
     
     sample_test = [s[:200] for s in samples]
     
-    print("*"*1000)
+    print("*"*100)
     print("sample_test examples are:", sample_test)
+    print("*"*100)
+    print("sample_test examples are:", prompt_suffix)
     # print("the length of sample_test", len(sample_test))
     # print("*"*100)
     # print("prompt_suffix is :", prompt_suffix)
