@@ -55,8 +55,8 @@ def main(args):
     
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
-        
-            input_len = 10
+            #changed from 10 to 100
+            input_len = 100
             input_ids = []
             attention_mask = []
             
