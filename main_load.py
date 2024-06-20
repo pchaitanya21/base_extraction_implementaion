@@ -142,14 +142,14 @@ def main(args):
     
     sample_test = [s[:200] for s in samples]
     
-    
-    # print("sample_test of the first few 200", sample_test)
+    print("*"*1000)
+    print("sample_test examples are:", sample_test)
     # print("the length of sample_test", len(sample_test))
     # print("*"*100)
     # print("prompt_suffix is :", prompt_suffix)
     # print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suffix)]
-    print("The comparison list length is:", len(comparison_result))
+    # print("The comparison list length is:", len(comparison_result))
     ones_count = sum(comparison_result)
     total_count = len(comparison_result)
     memorization = (ones_count / total_count) * 100
@@ -158,9 +158,9 @@ def main(args):
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
     # print("*"*100)
-    print("Number of prompts are:", len(prompts_list))
-    # print("*"*100)
-    print("Number of Prompt Suffix are:", len(prompt_suffix))
+    # print("Number of prompts are:", len(prompts_list))
+    # # print("*"*100)
+    # print("Number of Prompt Suffix are:", len(prompt_suffix))
 
     output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
     
