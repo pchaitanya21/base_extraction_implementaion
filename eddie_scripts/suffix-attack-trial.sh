@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#$ -N suffixATTACK
+#$ -N DREAMER
 #$ -o /exports/eddie/scratch/s2558433/job_runs/suffixATTACK_$JOB_ID.log
 #$ -e /exports/eddie/scratch/s2558433/job_runs/suffixATTACK_$JOB_ID.err
 #$ -cwd
@@ -35,7 +35,7 @@ conda activate suffix
 pip install -r requirements.txt
 
 # Run the main script
-python main_load-input10000.py --N 10 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path monology/pile-uncopyrighted --name-tag trial-10
+python main_load-input10000.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path monology/pile-uncopyrighted --name-tag trial-hope10000
 
 # Deactivate conda environment
 conda deactivate
