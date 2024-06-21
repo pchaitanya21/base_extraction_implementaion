@@ -131,9 +131,14 @@ def main(args):
             prompts_list.append(prompts)
             for text in texts:
                 p1 = calculate_perplexity(text, model1, tokenizer)
+                print("This is the sample perplexity:", p1)
                 p2 = calculate_perplexity(text, model2, tokenizer)
                 p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
                 zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
+                print(text.lower())
+                print(model1)
+                print(tokenizer)
+                print(device)
                 perplexity_window = calculate_perplexity_sliding(text.lower(), model1, tokenizer, device)
                 samples.append(text)
                 
