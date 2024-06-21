@@ -19,7 +19,7 @@ def main(args):
     print("Length:", len(ds))
     # print("The sample of dataset is:", ds[:1000])
     # 256  
-    seq_len = 400
+    seq_len = 256
     # top_k = 1000
     
     print("Loading models...")
