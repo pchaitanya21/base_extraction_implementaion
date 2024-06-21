@@ -18,8 +18,8 @@ def main(args):
     # ds= parse_pilecorpus(args.corpus_path)
     print("Length:", len(ds))
     # print("The sample of dataset is:", ds[:1000])
-   
-    seq_len = 256
+    # 256  
+    seq_len = 400
     # top_k = 1000
     
     print("Loading models...")
