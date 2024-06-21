@@ -211,7 +211,7 @@ def parse_arguments(argv):
     parser.add_argument('--model1', type=str, required=True, help="Hugging Face model name for the first model")
     parser.add_argument('--model2', type=str, required=True, help="Hugging Face model name for the second model")
     parser.add_argument('--corpus-path', type=str, required=True, help="Path to the corpus dataset")
-    parser.add_argument('--extra-name' type=str, required=False, help="additional tag for output file name")
+    parser.add_argument('--extra-name', type=str, required=False, help="additional tag for output file name")
     return parser.parse_args(argv)
 
 if __name__ == '__main__':
