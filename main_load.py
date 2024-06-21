@@ -94,7 +94,7 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            # print("The truncated prompt list is:", prompts)
+            print("The truncated prompt list is:", prompts)
             # print(prompts)
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
@@ -162,8 +162,8 @@ def main(args):
     
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
-    # print("*"*100)
-    # print("Number of prompts are:", len(prompts_list))
+    print("*"*100)
+    print("Number of prompts are:", len(prompts_list))
     # # print("*"*100)
     # print("Number of Prompt Suffix are:", len(prompt_suffix))
 
