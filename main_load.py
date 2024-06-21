@@ -30,15 +30,15 @@ def main(args):
     tokenizer.pad_token = tokenizer.eos_token
 
     #add the SERENGETI model changes here:  
-    model1 = AutoModelForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
-    model1.config.pad_token_id = model1.config.eos_token_id
-    model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
-    model2.eval() 
-    #for pythia 
-    # model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    # model1 = AutoModelForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
     # model1.config.pad_token_id = model1.config.eos_token_id
-    # model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
-    # model2.eval()
+    # model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    # model2.eval() 
+    #for pythia 
+    model1 = GPTNeoXForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    model1.config.pad_token_id = model1.config.eos_token_id
+    model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    model2.eval()
     #for gpt-neo
     # model1 = GPTNeoForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
     # model1.config.pad_token_id = model1.config.eos_token_id
