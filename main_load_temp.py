@@ -28,7 +28,7 @@ class DecayingTemperatureWarper(LogitsProcessor):
         
         return scores
 
-def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, window_size=100):
+def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, window_size=50):
     """
     Calculate min(exp(loss)) over a sliding window
     """
