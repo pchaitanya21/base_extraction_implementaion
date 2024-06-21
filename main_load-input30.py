@@ -167,7 +167,7 @@ def main(args):
     # # print("*"*100)
     # print("Number of Prompt Suffix are:", len(prompt_suffix))
 
-    output_csv = f'output_scores_{model1_name}_{model2_name}.csv'
+    output_csv = f'output_scores_{model1_name}_{model2_name}_{args.extra_name}.csv'
     
     with open(output_csv, 'w', newline='') as csvfile:
         fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
@@ -178,7 +178,7 @@ def main(args):
 
     print("Results saved to ", output_csv)
     
-    output_txt = f'output_results_{model1_name}_{model2_name}.txt'
+    output_txt = f'output_results_{model1_name}_{model2_name}_{args.extra_name}.txt'
     with open(output_txt, 'w') as f:
         metric = -np.log(scores["XL"])
         f.write(f"======== top sample by XL perplexity: ========\n")
@@ -211,6 +211,7 @@ def parse_arguments(argv):
     parser.add_argument('--model1', type=str, required=True, help="Hugging Face model name for the first model")
     parser.add_argument('--model2', type=str, required=True, help="Hugging Face model name for the second model")
     parser.add_argument('--corpus-path', type=str, required=True, help="Path to the corpus dataset")
+    parser.add_argument('--extra-name' type=str, required=False, help="additional tag for output file name")
     return parser.parse_args(argv)
 
 if __name__ == '__main__':
