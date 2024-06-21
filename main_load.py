@@ -95,6 +95,7 @@ def main(args):
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
             print("The truncated prompt list is:", prompts)
+            print("The truncated prompt list length is:", len(prompts))
             print("The truncated prompts len after changing input len:",len(prompts[0]))
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
