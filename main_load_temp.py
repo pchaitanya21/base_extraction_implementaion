@@ -40,6 +40,8 @@ def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, windo
             input_window = input[start_idx: start_idx+window_size]
             output = model(input_window, labels=input_window)
             min_perplexity = min(min_perplexity, torch.exp(output.loss))
+            print("The min perplexity is:", min_perplexity)
+            print("The min perplexity type is :", type(min_perplexity))
     return min_perplexity
 
 
@@ -135,10 +137,6 @@ def main(args):
                 p2 = calculate_perplexity(text, model2, tokenizer)
                 p_lower = calculate_perplexity(text.lower(), model1, tokenizer)
                 zlib_entropy = len(zlib.compress(bytes(text, 'utf-8')))
-                print(text.lower())
-                print(model1)
-                print(tokenizer)
-                print(device)
                 perplexity_window = calculate_perplexity_sliding(text.lower(), model1, tokenizer, device)
                 samples.append(text)
                 
