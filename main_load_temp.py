@@ -46,8 +46,8 @@ def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, windo
 def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
-    path="swa_sample.txt"
-    ds= parse_swahili(path)
+    # path="swa_sample.txt"
+    ds= parse_swahili(args.corpus_path)
     print("Length:", len(ds))
     print("The sample of dataset is:", ds[:1000])
    
