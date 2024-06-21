@@ -70,14 +70,14 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                print("The length of a prompt is:", len(prompt))
-                print("The prompt is :",prompt)
-                print("*"  * 100)
+                # print("The length of a prompt is:", len(prompt))
+                # print("The prompt is :",prompt)
+                # print("*"  * 100)
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
-                print("The length of the suffix is: ", len(prompt_suff))
+                # print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
-                print("The prompt suffix is: ", prompt_suff)
-                print("*"  * 100)
+                # print("The prompt suffix is: ", prompt_suff)
+                # print("*"  * 100)
                 # Tokenize the prompt ensuring consistent input lengths
                 #removed padding="max_length" and max_length=input_len,
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
@@ -94,9 +94,9 @@ def main(args):
             
             # The actual truncated prompts
             prompts = tokenizer.batch_decode(inputs['input_ids'], skip_special_tokens=True)
-            print("The truncated prompt list is:", prompts)
-            print("The truncated prompt list length is:", len(prompts))
-            print("The truncated prompts len after changing input len:",len(prompts[0]))
+            # print("The truncated prompt list is:", prompts)
+            # print("The truncated prompt list length is:", len(prompts))
+            # print("The truncated prompts len after changing input len:",len(prompts[0]))
             
             print("Attention Mask shape:", inputs['attention_mask'].shape)
         
@@ -146,14 +146,14 @@ def main(args):
     
     sample_test = [s[:200] for s in samples]
     
-    print("*"*100)
-    print("sample_test examples are:", sample_test)
-    print("*"*100)
-    print("prompt suffix examples are:", prompt_suffix)
-    print("the length of sample_test", len(sample_test))
-    print("*"*100)
+    # print("*"*100)
+    # print("sample_test examples are:", sample_test)
+    # print("*"*100)
+    # print("prompt suffix examples are:", prompt_suffix)
+    # print("the length of sample_test", len(sample_test))
+    # print("*"*100)
     # print("prompt_suffix is :", prompt_suffix)
-    print("the length of suffix are", len(prompt_suffix))
+    # print("the length of suffix are", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suffix)]
     # print("The comparison list length is:", len(comparison_result))
     ones_count = sum(comparison_result)
@@ -164,7 +164,7 @@ def main(args):
     print("Memorization is: "  , memorization)
     prompts_list = [item for sublist in prompts_list for item in sublist]
     print("*"*100)
-    print("Number of prompts are:", len(prompts_list))
+    # print("Number of prompts are:", len(prompts_list))
     # # print("*"*100)
     # print("Number of Prompt Suffix are:", len(prompt_suffix))
 
