@@ -8,7 +8,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=5
-
+#SBATCH --mem-per-cpu=4G
 
 #SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
 #SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.err
