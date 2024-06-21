@@ -70,12 +70,14 @@ def main(args):
                 
                 
                 prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
-                # print("The length of a prompt is:", len(prompt))
-                # print(prompt)
+                print("The length of a prompt is:", len(prompt))
+                print("The prompt is :",prompt)
+                print("*"  * 100)
                 prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
-                # print("The length of the suffix is: ", len(prompt_suff))
+                print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
-                # print("The prompt suffix is: ", prompt_suff)
+                print("The prompt suffix is: ", prompt_suff)
+                print("*"  * 100)
                 # Tokenize the prompt ensuring consistent input lengths
                 #removed padding="max_length" and max_length=input_len,
                 inputs = tokenizer(prompt, return_tensors="pt", max_length=input_len, truncation=True)
@@ -143,14 +145,14 @@ def main(args):
     
     sample_test = [s[:200] for s in samples]
     
-    # print("*"*100)
-    # print("sample_test examples are:", sample_test)
-    # print("*"*100)
-    # print("prompt suffix examples are:", prompt_suffix)
-    # print("the length of sample_test", len(sample_test))
-    # print("*"*100)
-    # print("prompt_suffix is :", prompt_suffix)
-    # print("the length of sample_test", len(prompt_suffix))
+    print("*"*100)
+    print("sample_test examples are:", sample_test)
+    print("*"*100)
+    print("prompt suffix examples are:", prompt_suffix)
+    print("the length of sample_test", len(sample_test))
+    print("*"*100)
+    print("prompt_suffix is :", prompt_suffix)
+    print("the length of sample_test", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suffix)]
     # print("The comparison list length is:", len(comparison_result))
     ones_count = sum(comparison_result)
