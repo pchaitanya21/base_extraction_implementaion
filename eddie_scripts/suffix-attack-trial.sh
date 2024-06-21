@@ -35,7 +35,7 @@ conda activate suffix
 pip install -r requirements.txt
 
 # Run the main script
-python main_load-input10000.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path monology/pile-uncopyrighted --name-tag input10000
+python main_load-input10000.py --N 10 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path monology/pile-uncopyrighted --name-tag input10000
 
 # Deactivate conda environment
 conda deactivate
