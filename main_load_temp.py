@@ -28,7 +28,7 @@ class DecayingTemperatureWarper(LogitsProcessor):
         
         return scores
 
-def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, window_size=20):
+def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, window_size=100):
     """
     Calculate min(exp(loss)) over a sliding window
     """
@@ -40,10 +40,11 @@ def calculate_perplexity_sliding(input_sentence, model, tokenizer, device, windo
         for start_idx in range(input.shape[0]-window_size):
 
             input_window = input[start_idx: start_idx+window_size]
+            input_window = input_window.unsqueeze(0) 
             print("The input window shape is:", input_window.shape)
 
             output = model(input_window, labels=input_window)
-            
+
             min_perplexity = min(min_perplexity, torch.exp(output.loss))
             print("The min perplexity is:", min_perplexity)
             print("The min perplexity type is :", type(min_perplexity))
