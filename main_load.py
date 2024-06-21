@@ -14,8 +14,8 @@ def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
     # path="swa_sample.txt"
-    ds= parse_swahili(args.corpus_path)
-    # ds= parse_pilecorpus(args.corpus_path)
+    # ds= parse_swahili(args.corpus_path)
+    ds= parse_pilecorpus(args.corpus_path)
     print("Length:", len(ds))
     # print("The sample of dataset is:", ds[:1000])
     # 256  
@@ -56,7 +56,7 @@ def main(args):
     
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
-            #changed from 10 to 100 breaks the code? 
+            #input_len 25 works pile
             input_len = 25
             input_ids = []
             attention_mask = []
