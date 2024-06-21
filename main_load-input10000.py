@@ -69,11 +69,11 @@ def main(args):
                 # print("The index Selected is:", r)
                 
                 
-                prompt = " ".join(ds[r:r+100].split(" ")[1:-1])
+                prompt = " ".join(ds[r:r+10000].split(" ")[1:-1])
                 # print("The length of a prompt is:", len(prompt))
                 # print("The prompt is :",prompt)
                 # print("*"  * 100)
-                prompt_suff=  " ".join(ds[r:r+200].split(" ")[1:-1])
+                prompt_suff=  " ".join(ds[r:r+10000].split(" ")[1:-1])
                 # print("The length of the suffix is: ", len(prompt_suff))
                 # print("The untruncated prompt is:",prompt)
                 # print("The prompt suffix is: ", prompt_suff)
