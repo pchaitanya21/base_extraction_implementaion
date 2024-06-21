@@ -57,7 +57,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #changed from 10 to 100 breaks the code? 
-            input_len = 30
+            input_len = 25
             input_ids = []
             attention_mask = []
             
@@ -152,8 +152,8 @@ def main(args):
     print("prompt suffix examples are:", prompt_suffix)
     print("the length of sample_test", len(sample_test))
     print("*"*100)
-    print("prompt_suffix is :", prompt_suffix)
-    print("the length of sample_test", len(prompt_suffix))
+    # print("prompt_suffix is :", prompt_suffix)
+    print("the length of suffix are", len(prompt_suffix))
     comparison_result = [1 if sample == prompt else 0 for sample, prompt in zip(sample_test, prompt_suffix)]
     # print("The comparison list length is:", len(comparison_result))
     ones_count = sum(comparison_result)
