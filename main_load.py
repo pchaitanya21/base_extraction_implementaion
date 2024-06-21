@@ -57,7 +57,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #changed from 10 to 100 breaks the code? 
-            input_len = 60
+            input_len = 50
             input_ids = []
             attention_mask = []
             
