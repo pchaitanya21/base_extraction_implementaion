@@ -91,7 +91,7 @@ def main(args):
                 suffix= tokenizer.decode(suffix_ids, skip_special_tokens=True)
 
 
-                input_ids.apped(prompt_ids)
+                input_ids.append(prompt_ids)
                 attention_mask.append(torch.ones_like(prompt_ids))
                 prompts_list.append(prompt)
                 prompt_suffix.append(suffix)
