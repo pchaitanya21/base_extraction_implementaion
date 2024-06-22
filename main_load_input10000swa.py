@@ -142,7 +142,7 @@ def main(args):
                 scores["XL"].append(p1.cpu())
                 scores["S"].append(p2.cpu())
                 scores["Lower"].append(p_lower.cpu())
-                scores["zlib"].append(zlib_entropy.cpu())
+                scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
     # print("*"*100)
