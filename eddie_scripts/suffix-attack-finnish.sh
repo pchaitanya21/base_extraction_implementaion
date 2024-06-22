@@ -17,7 +17,7 @@ export PIP_CACHE_DIR="/exports/eddie/scratch/s2605274/.cache/pip"
 export CONDA_PKGS_DIRS="/exports/eddie/scratch/s2605274/.cache/conda_pkgs"
 
 
-source /exports/eddie/scratch/s2605274/Miniconda3/etc/profile.d/conda.sh
+source /exports/eddie/scratch/s2605274/miniconda3/etc/profile.d/conda.sh
 
 cd /exports/eddie/scratch/s2605274/base_extraction_implementaion
 # conda create -n suffix python=3.9 
