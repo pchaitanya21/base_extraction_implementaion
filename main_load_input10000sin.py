@@ -60,7 +60,8 @@ def main(args):
             input_len = 150 
             input_ids = []
             attention_mask = []
-            
+            #for the gpt loaded model tokenized chunk 
+            max_seq_length = 2048
             while len(input_ids) < args.batch_size:
                 # Sample random text from the Pile corpus
                 r = np.random.randint(0, len(ds))
@@ -80,7 +81,7 @@ def main(args):
                 # print("*"  * 100)
                 # Tokenize the prompt ensuring consistent input lengths
                 #removed padding="max_length" and max_length=input_len,
-                tokenized_chunk = tokenizer(chunk, return_tensors="pt")
+                tokenized_chunk = tokenizer(chunk, return_tensors="pt",  truncation=True, max_length=max_seq_length)
                 token_ids= tokenized_chunk['input_ids'][0]
 
                 prompt_ids= token_ids[:input_len]
