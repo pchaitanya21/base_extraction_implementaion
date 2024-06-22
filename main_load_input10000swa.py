@@ -176,9 +176,10 @@ def main(args):
     
     
     print("Memorization is: "  , memorization)
-    prompts_list = [item for sublist in prompts_list for item in sublist]
+    # prompts_list = [item for sublist in prompts_list for item in sublist]
     print("*"*100)
-    # print("Number of prompts are:", len(prompts_list))
+    print("Number of prompts are:", len(prompts_list))
+    print("Prompts_list is: ", prompts_list)
     # # print("*"*100)
     # print("Number of Prompt Suffix are:", len(prompt_suffix))
 
