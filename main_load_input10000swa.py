@@ -11,6 +11,7 @@ from model_utils import calculate_perplexity, print_best, device
 from extraction import parse_pilecorpus, parse_swahili
 
 def main(args):
+    device= torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     print("Loading dataset...")
     # path="swa_sample.txt"
@@ -138,10 +139,10 @@ def main(args):
                 samples.append(text)
                 
                 
-                scores["XL"].append(p1)
-                scores["S"].append(p2)
-                scores["Lower"].append(p_lower)
-                scores["zlib"].append(zlib_entropy)
+                scores["XL"].append(p1.cpu())
+                scores["S"].append(p2.cpu())
+                scores["Lower"].append(p_lower.cpu())
+                scores["zlib"].append(zlib_entropy.cpu())
                 
             pbar.update(args.batch_size)
     # print("*"*100)
