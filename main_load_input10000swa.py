@@ -95,9 +95,9 @@ def main(args):
                 attention_mask.append(torch.ones_like(prompt_ids))
                 prompts_list.append(prompt)
                 prompt_suffix.append(suffix)
-                print("The prompt is:", prompt)
-                print("*"*100)
-                print("The suffix is:", suffix)
+                # print("The prompt is:", prompt)
+                # print("*"*100)
+                # print("The suffix is:", suffix)
                 # if len(inputs['input_ids'][0]) == input_len:
                 #     input_ids.append(inputs['input_ids'][0])
                 #     attention_mask.append(inputs['attention_mask'][0])
@@ -122,7 +122,7 @@ def main(args):
                 top_p=1.0
             )
 
-            texts = tokenizer.decode(output_sequences, skip_special_tokens=True)
+            texts = [tokenizer.decode(seq, skip_special_tokens=True) for seq in output_sequences]
             # prompts_list.append(prompts)
         
             # print("The prompt list is:", prompts_list[0][:2])
