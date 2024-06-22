@@ -10,6 +10,10 @@
 
 
 
+module load cuda/12.1.1
+
+module load anaconda
+
 #SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
 #SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
@@ -21,6 +25,7 @@ export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
 export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
 export HF_DATASETS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/datasets"
 
+source /work/tc062/tc062/s2605274/
 source /work/tc062/tc062/s2605274/Miniconda3/etc/profile.d/conda.sh
 
 # Change to the working directory
