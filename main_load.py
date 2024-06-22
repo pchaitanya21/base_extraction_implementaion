@@ -14,8 +14,8 @@ def main(args):
     print(f"Using device: {device}")
     print("Loading dataset...")
     # path="swa_sample.txt"
-    # ds= parse_swahili(args.corpus_path)
-    ds= parse_pilecorpus(args.corpus_path)
+    ds= parse_swahili(args.corpus_path)
+    # ds= parse_pilecorpus(args.corpus_path)
     print("Length:", len(ds))
     # print("The sample of dataset is:", ds[:1000])
     # 256  
