@@ -88,7 +88,7 @@ def main(args):
                 # print("the lenght of tokenized prompt is:", len(inputs))
                 # print(inputs)
                 suffix_ids= token_ids[input_len:input_len+ 100 ]
-                suffix= tokenizer.decoder(suffix_ids, skip_special_tokens=True)
+                suffix= tokenizer.decode(suffix_ids, skip_special_tokens=True)
 
 
                 input_ids.apped(prompt_ids)
