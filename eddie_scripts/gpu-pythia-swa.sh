@@ -30,7 +30,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-6.9b --model2 EleutherAI/pythia-6.9b --corpus-path swa_sample.txt
+python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path swa_sample.txt --name-tag pythia6.9swa200
 #python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --cor
 
 conda deactivate 

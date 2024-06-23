@@ -58,7 +58,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #input_len 25 works pile
-            input_len = 150 
+            input_len = 200 
             input_ids = []
             attention_mask = []
             
@@ -157,7 +157,7 @@ def main(args):
 
     
    
-    sample_test_full = [s[:250] for s in samples]
+    sample_test_full = [s[:300] for s in samples]
     sample_test = [s[input_len:input_len+100] for s in samples]
     
     print("*"*100)
