@@ -6,7 +6,7 @@
 #SBATCH --account=tc062-pool3
 #SBATCH --time=96:00:00
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 
 
 
