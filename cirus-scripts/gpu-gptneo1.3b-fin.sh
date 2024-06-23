@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=gptneo_fin
+#SBATCH --job-name=gptneo_fin1.3b
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
 #SBATCH --account=tc062-pool3
@@ -15,8 +15,8 @@ module load cuda/12.1.1
 
 
 
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/gptneo-125m_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/gptneo-125m_%j.err
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/gptneo-1.3b%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/gptneo-1.3b%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 
 #SBATCH --mail-type=BEGIN,END,FAIL      
