@@ -138,9 +138,9 @@ def main(args):
                 samples.append(text)
                 
                 
-                scores["XL"].append(p1)
-                scores["S"].append(p2)
-                scores["Lower"].append(p_lower)
+                scores["XL"].append(p1.cpu())
+                scores["S"].append(p2.cpu())
+                scores["Lower"].append(p_lower.cpu())
                 scores["zlib"].append(zlib_entropy)
                 
             pbar.update(args.batch_size)
