@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Use the variable for the job name and log/error files
-#$ -N Pythia-Fin-KING
-#$ -o /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-6.9b_$JOB_ID.log
-#$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-6.9b_$JOB_ID.err
+#$ -N Pythia-Fin-2.8b
+#$ -o /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.log
+#$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.err
 #$ -cwd
 #$ -q gpu
 #$ -pe gpu-a100 1
@@ -30,7 +30,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000fin.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-6.9b --model2 EleutherAI/pythia-6.9b --corpus-path fin_sample.txt --name-tag pythia6.9fin
+python main_load_input10000finp.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path fin_sample.txt --name-tag pythia2.8bfin100
 #python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --cor
 
 conda deactivate 
