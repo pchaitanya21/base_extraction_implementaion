@@ -58,7 +58,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #input_len 25 works pile
-            input_len = 200 
+            input_len = 150 
             input_ids = []
             attention_mask = []
             
@@ -157,13 +157,13 @@ def main(args):
 
     
    
-    sample_test_full = [s[:300] for s in samples]
-    sample_test = [s[input_len:input_len+100] for s in samples]
+    # sample_test_full = [s[:200] for s in samples]
+    sample_test = [s[input_len:input_len+50] for s in samples]
     
-    print("*"*100)
-    print("sample_test examples are:", sample_test)
-    print("*"*100)
-    print("sample_test examples are:", sample_test_full)
+    # print("*"*100)
+    # print("sample_test examples are:", sample_test)
+    # print("*"*100)
+    # print("sample_test examples are:", sample_test_full)
     # print("prompt suffix examples are:", prompt_suffix)
     # print("the length of sample_test", len(sample_test))
     # print("*"*100)
@@ -179,8 +179,8 @@ def main(args):
     print("Memorization is: "  , memorization)
     # prompts_list = [item for sublist in prompts_list for item in sublist]
     print("*"*100)
-    print("Number of prompts are:", len(prompts_list))
-    print("Prompts_list is: ", prompts_list)
+    # print("Number of prompts are:", len(prompts_list))
+    # print("Prompts_list is: ", prompts_list)
     # # print("*"*100)
     # print("Number of Prompt Suffix are:", len(prompt_suffix))
 
