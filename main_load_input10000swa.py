@@ -11,7 +11,7 @@ from model_utils import calculate_perplexity, print_best, device
 from extraction import parse_pilecorpus, parse_swahili
 
 def main(args):
-    device= torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device= torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     print("Loading dataset...")
     # path="swa_sample.txt"
