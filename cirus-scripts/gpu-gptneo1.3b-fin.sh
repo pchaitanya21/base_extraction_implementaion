@@ -39,7 +39,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/gpt-neo-125m --model2 /work/tc062/tc062/s2605274/models/gpt-neo-125m --corpus-path fin_sample.txt --name-tag gptneo1.3bfin
+python main_load_input10000fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/gpt-neo-1.3B --model2 /work/tc062/tc062/s2605274/models/gpt-neo-1.3B --corpus-path fin_sample.txt --name-tag gptneo1.3bfin
 
 # Deactivate conda environment
 conda deactivate
