@@ -1,17 +1,22 @@
 #!/bin/bash
 
-#SBATCH --job-name=pythia_swa
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+#SBATCH --job-name=pythia_swa2.8
+#SBATCH --partition=gpu
+#SBATCH --qos=gpu
 #SBATCH --account=tc062-pool3
 #SBATCH --time=96:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=16
+#SBATCH --gres=gpu:1
 
 
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.err
+
+
+module load cuda/12.1.1
+
+
+
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 
 #SBATCH --mail-type=BEGIN,END,FAIL      
@@ -20,6 +25,7 @@
 export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
 export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
 export HF_DATASETS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/datasets"
+
 
 source /work/tc062/tc062/s2605274/Miniconda3/etc/profile.d/conda.sh
 
@@ -33,7 +39,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-6.9b --model2 /work/tc062/tc062/s2605274/models/pythia-6.9b --corpus-path fin_sample.txt --name-tag pythia10kfin
+python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-2.8b --model2 /work/tc062/tc062/s2605274/models/pythia-2.8b --corpus-path swa_sample.txt --name-tag pythia2.8swa50
 
 # Deactivate conda environment
 conda deactivate

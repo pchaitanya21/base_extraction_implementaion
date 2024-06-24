@@ -59,7 +59,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #input_len 25 works pile
-            input_len = 150 
+            input_len = 50 
             input_ids = []
             attention_mask = []
             
@@ -89,7 +89,7 @@ def main(args):
                 prompt= tokenizer.decode(prompt_ids, skip_special_tokens=True)
                 # print("the lenght of tokenized prompt is:", len(inputs))
                 # print(inputs)
-                suffix_ids= token_ids[input_len:input_len+ 100 ]
+                suffix_ids= token_ids[input_len:input_len+ 50 ]
                 suffix= tokenizer.decode(suffix_ids, skip_special_tokens=True)
 
 
