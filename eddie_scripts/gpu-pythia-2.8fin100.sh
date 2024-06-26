@@ -11,14 +11,16 @@
 #$ -l h_rt=24:00:00
 #$ -m bea -M s2605274@ed.ac.uk 
 
-export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
-export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
-export HF_DATASETS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/datasets"
+#Make sure these are in your eddie scratch space
+export HF_HOME="/exports/eddie/scratch/s2605274/.cache/huggingface_cache"
+export TRANSFORMERS_CACHE="/exports/eddie/scratch/s2605274/.cache/huggingface_cache/transformers"
+export HF_DATASETS_CACHE="/exports/eddie/scratch/s2605274/.cache/huggingface_cache/datasets"
+export PIP_CACHE_DIR="/exports/eddie/scratch/s2605274/.cache/pip"
+export CONDA_PKGS_DIRS="/exports/eddie/scratch/s2605274/.cache/conda_pkgs"
 
-source /work/tc062/tc062/s2605274/Miniconda3/etc/profile.d/conda.sh
+source /exports/eddie/scratch/s2605274/miniconda3/etc/profile.d/conda.sh
 
-# Change to the working directory
-cd /work/tc062/tc062/s2605274/base_extraction_implementaion/
+cd /exports/eddie/scratch/s2605274/base_extraction_implementaion/
 
 # Activate conda environment
 conda activate myenv
