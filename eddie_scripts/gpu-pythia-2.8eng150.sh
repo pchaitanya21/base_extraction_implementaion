@@ -6,7 +6,7 @@
 #$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.err
 #$ -cwd
 #$ -q gpu
-#$ -pe gpu-a100 1
+#$ -pe gpu 1
 #$ -l h_vmem=500G
 #$ -l h_rt=24:00:00
 #$ -m bea -M s2605274@ed.ac.uk 
