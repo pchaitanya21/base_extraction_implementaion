@@ -3,8 +3,8 @@
 #SBATCH --job-name=pythia_eng2.8
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
-#SBATCH --account=tc062-pool3
-#SBATCH --time=96:00:00
+#SBATCH --account=tc062-chai
+#SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 

@@ -3,8 +3,8 @@
 #SBATCH --job-name=pythia_swa2.8
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
-#SBATCH --account=tc062-pool3
-#SBATCH --time=96:00:00
+#SBATCH --account=tc062-chai
+#SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 
@@ -14,8 +14,8 @@
 module load cuda/12.1.1
 
 
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-6.9b_%j.err
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 
 #SBATCH --mail-type=BEGIN,END,FAIL      
