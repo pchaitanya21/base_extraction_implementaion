@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pythia_swa2.8
+#SBATCH --job-name=pythia_fin50 
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
 #SBATCH --account=tc062-chai
