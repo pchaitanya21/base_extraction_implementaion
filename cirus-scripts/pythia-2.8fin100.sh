@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pythia_eng1.4
+#SBATCH --job-name=pythia_swa2.8b
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
 #SBATCH --account=tc062-chai
@@ -14,9 +14,8 @@
 module load cuda/12.1.1
 
 
-
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-1.4b_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-1.4b_%j.err
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 
 #SBATCH --mail-type=BEGIN,END,FAIL      
@@ -25,7 +24,6 @@ module load cuda/12.1.1
 export HF_HOME="/work/tc062/tc062/s2605274/huggingface_cache"
 export TRANSFORMERS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/transformers"
 export HF_DATASETS_CACHE="/work/tc062/tc062/s2605274/huggingface_cache/datasets"
-
 
 source /work/tc062/tc062/s2605274/Miniconda3/etc/profile.d/conda.sh
 
@@ -39,7 +37,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000eng.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path  monology/pile-uncopyrighted --name-tag pythia1.4eng150
+python main_load_input10000finp.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-2.8b --model2 /work/tc062/tc062/s2605274/models/pythia-2.8b --corpus-path fin_sample.txt --name-tag pythia2.8fin100
 
 # Deactivate conda environment
 conda deactivate
