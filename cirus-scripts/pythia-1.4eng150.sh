@@ -39,7 +39,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000eng.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path  --name-tag pythia1.4eng150
+python main_load_input10000eng.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path  monology/pile-uncopyrighted --name-tag pythia1.4eng150
 
 # Deactivate conda environment
 conda deactivate
