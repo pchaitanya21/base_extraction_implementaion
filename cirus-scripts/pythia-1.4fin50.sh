@@ -37,7 +37,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_dp_fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-2.8b --model2 /work/tc062/tc062/s2605274/models/pythia-2.8b --corpus-path fin_sample.txt --name-tag pythia1.4fin50
+python main_load_dp_fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-2.8b --model2 /work/tc062/tc062/s2605274/models/pythia-2.8b --corpus-path fin_sample.txt --name-tag pythia2.8fin50
 
 # Deactivate conda environment
 conda deactivate
