@@ -6,7 +6,7 @@
 #SBATCH --account=tc062-chai
 #SBATCH --time=12:00:00
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:2
 
 
 
@@ -37,7 +37,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path fin_sample.txt --name-tag pythia1.4fin50
+python main_load_dp_fin.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path fin_sample.txt --name-tag pythia1.4fin50
 
 # Deactivate conda environment
 conda deactivate
