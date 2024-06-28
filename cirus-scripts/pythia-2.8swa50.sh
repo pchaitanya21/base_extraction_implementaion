@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pythia_swa2.8
+#SBATCH --job-name=pythia_swa1.4
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
 #SBATCH --account=tc062-chai
@@ -15,8 +15,8 @@ module load cuda/12.1.1
 
 
 
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-1.4b_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-1.4b_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 
 #SBATCH --mail-type=BEGIN,END,FAIL      
