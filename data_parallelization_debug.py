@@ -70,7 +70,7 @@ def main(args):
 
             print("Attention Mask shape:", inputs['attention_mask'].shape)
 
-            # Generate sequences using DataParallel model
+            # use DataParallel model
             output_sequences = model1.module.generate(
                 input_ids=inputs['input_ids'].to(device),
                 attention_mask=inputs['attention_mask'].to(device),
