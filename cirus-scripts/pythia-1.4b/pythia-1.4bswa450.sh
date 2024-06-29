@@ -5,7 +5,7 @@
 #SBATCH --qos=gpu
 #SBATCH --account=tc062-chai
 #SBATCH --time=12:00:00
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --gres=gpu:1
 
 
