@@ -59,7 +59,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #input_len 25 works pile
-            input_len = 150 
+            input_len = 950 
             input_ids = []
             attention_mask = []
             
