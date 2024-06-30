@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=pythia_eng2.8
+#SBATCH --job-name=pythia_ppx1.4
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu
 #SBATCH --account=tc062-chai
@@ -15,8 +15,8 @@ module load cuda/12.1.1
 
 
 
-#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.log
-#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-2.8b_%j.err
+#SBATCH --output=/work/tc062/tc062/s2605274/job_logs/pythia-1.4bppx_%j.log
+#SBATCH --error=/work/tc062/tc062/s2605274/job_logs/pythia-1.4bppx_%j.err
 #SBATCH --chdir=/work/tc062/tc062/s2605274/job_logs/
 
 #SBATCH --mail-type=BEGIN,END,FAIL      
@@ -39,7 +39,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path  monology/pile-uncopyrighted --name-tag pythia1.4swa_perplex150
+python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 /work/tc062/tc062/s2605274/models/pythia-1.4b --model2 /work/tc062/tc062/s2605274/models/pythia-1.4b --corpus-path  swa_perplex.txt --name-tag pythia1.4swa_perplex150
 
 # Deactivate conda environment
 conda deactivate
