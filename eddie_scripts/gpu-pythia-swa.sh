@@ -5,6 +5,7 @@
 #$ -o /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.log
 #$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.err
 #$ -cwd
+#$ -P lel_hcrc_cstr_students
 #$ -q gpu
 #$ -pe gpu-a100 1
 #$ -l h_vmem=500G
@@ -30,7 +31,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000swap.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path swa_sample.txt --name-tag pythia2.8swa100
+python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path swa_sample.txt --name-tag pythia2.8swa150
 #python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --cor
 
 conda deactivate 
