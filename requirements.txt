@@ -4,3 +4,5 @@ numpy
 tqdm
 zstandard
 datasets
+bitsandbytes
+accelerate
