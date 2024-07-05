@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Use the variable for the job name and log/error files
-#$ -N Pythia-Swa-6.9b_quant
+#$ -N Pythia-Swa-2.8_dedup
 #$ -o /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.log
 #$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.err
 #$ -cwd
@@ -31,7 +31,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 santhosh97/gpt-pythia-6.9b-quantized --model2 santhosh97/gpt-pythia-6.9b-quantized --corpus-path swa_sample.txt --name-tag pythiaswa6.9bquant150
+python main_load_input10000swa.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b-deduped --model2 EleutherAI/pythia-2.8b-deduped --corpus-path swa_sample.txt --name-tag pythiaswa2.8bdedup150
 #python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --cor
 
 conda deactivate 
