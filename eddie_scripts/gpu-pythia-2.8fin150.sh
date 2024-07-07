@@ -30,7 +30,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input_fin.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path fin_sample.txt --name-tag pythia2.8bfin150
+python main_load_input_fin.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-2.8b --corpus-path fin_sample.txt --name-tag pythia2.8bfin_run3_150
 
 # Deactivate conda environment
 conda deactivate
