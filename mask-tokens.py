@@ -1,15 +1,17 @@
 import argparse
 import numpy as np
+import pandas as pd
 import random
 import re
 import sys
 import torch
 import zlib
 import csv
+import stanza
 from datasets import load_dataset
 from transformers import MambaForCausalLM, AutoTokenizer, GPTNeoXForCausalLM, AutoModelForMaskedLM, pipeline
 from model_utils import calculate_perplexity, print_best, parse_pilecorpus, device
-import stanza
+
 
  # Download the Swahili model for Stanza
 stanza.download('fi')
@@ -110,7 +112,10 @@ def main(args):
     print("Loading dataset...")
 
     ds = None
+    df = pd.read_csv('output_scores__work_tc062_tc062_s2605274_models_pythia-1.4b__work_tc062_tc062_s2605274_models_pythia-1.4b_pythia1.4fin150.csv')
 
+    # Extract the 'prompt' column and save it to a list called ds
+    ds = df['prompt'].tolist()
     # if args.is_lang:
     #     ds = parse_swahili(path=args.corpus_path)
     # else:
