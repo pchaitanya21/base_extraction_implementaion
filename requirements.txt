@@ -6,3 +6,4 @@ zstandard
 datasets
 # bitsandbytes
 # accelerate
+stanza

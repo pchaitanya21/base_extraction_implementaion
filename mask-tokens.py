@@ -8,14 +8,93 @@ import zlib
 import csv
 from datasets import load_dataset
 from transformers import MambaForCausalLM, AutoTokenizer, GPTNeoXForCausalLM, AutoModelForMaskedLM, pipeline
-from model_utils import calculate_perplexity, print_best, parse_pilecorpus, parse_splitted, parse_wmt_splitted, device
+from model_utils import calculate_perplexity, print_best, parse_pilecorpus, device
+import stanza
+from transformers import pipeline
+
+# Download the Swahili model for Stanza
+stanza.download('fi')
+# Initialize the Swahili pipeline
+nlp = stanza.Pipeline('fi')
+nlp_swa = pipeline("ner", model="Davlan/xlm-roberta-base-ner-hrl")
+
+def parse_swahili(path):
+    file_content=""
+    chunk_size = 10 * 1024 * 1024  # 10 MB
+
+    try:
+        # Open the file in read mode
+        with open(path, 'r', encoding='utf-8') as file:
+            while True:
+                # Read the next chunk from the file
+                chunk = file.read(chunk_size)
+                if not chunk:
+                    break  # End of file reached
+                # Append the chunk to the file content string
+                file_content += chunk
+        print("File read successfully.")
+    except FileNotFoundError:
+        print(f"The file at {path} was not found.")
+    except IOError as e:
+        print(f"An error occurred while reading the file at {path}: {e}")
+    
+    return file_content
 
 def get_words_to_mask(text, tokenizer):
     # Get 'important' words e.g. nouns, verbs, adjectives (not articles...)
-    tokens = tokenizer.tokenize(text)
-    words = [tokenizer.convert_tokens_to_string([token]) for token in tokens]
-    unique_words = list(set(words))
+    # tokens = tokenizer.tokenize(text)
+    # words = [tokenizer.convert_tokens_to_string([token]) for token in tokens]
+    # unique_words = list(set(words))
+    entities = nlp_swa(text)
+    unique_words = [entity['word'].replace('▁', '').lstrip('_') for entity in entities if entity['entity'].startswith('B-') or entity['entity'].startswith('I-')]
+    
     return unique_words
+
+def get_words_to_mask_fin(text, tokenizer):
+    # Get 'important' words e.g. nouns, verbs, adjectives (not articles...)
+    # tokens = tokenizer.tokenize(text)
+    # words = [tokenizer.convert_tokens_to_string([token]) for token in tokens]
+    # unique_words = list(set(words))
+    doc = nlp(text)
+    unique_words = []
+    # Extract tokens and their POS tags
+    for sentence in doc.sentences:
+        for word in sentence.words:
+            if word.upos == 'PROPN':  # PROPN stands for proper noun
+                unique_words.append(word.text)
+    return unique_words
+
+# def mask_text(text, important_words, max_masks=4, mask_ratio=0.5):
+#     words = text.split()
+#     masked_words = []
+#     masked_values = []
+    
+#     # Determine the number of tokens to mask, up to max_masks
+#     num_to_mask = min(max_masks, len(important_words))
+    
+#     # Randomly select tokens to mask
+#     tokens_to_mask = random.sample(important_words, k=num_to_mask)
+    
+#     for word in words:
+#         # Check if word should be masked
+#         if word in tokens_to_mask and random.random() < mask_ratio:
+#             masked_values.append(word)
+#             masked_words.append('<mask>')
+#             # Remove word from tokens_to_mask to prevent multiple masking
+#             tokens_to_mask.remove(word)
+#         else:
+#             masked_words.append(word)
+    
+#     masked_text = ' '.join(masked_words)
+#     return masked_text, masked_values
+
+# # Example usage
+# text = "Rais Uhuru Kenyatta alikutana na Waziri Mkuu wa Tanzania, Kassim Majaliwa, mjini Dar es Salaam."
+# important_words = ['Uhuru', 'Kenyatta', 'Tanzania', 'Kassim', 'Majaliwa', 'Dar', 'Salaam']
+
+# masked_text, masked_values = mask_text(text, important_words)
+# print('Masked Text:', masked_text)
+# print('Masked Values:', masked_values)
 
 def mask_text(text, important_words, mask_ratio=0.5):
     words = text.split()
@@ -38,17 +117,15 @@ def main(args):
 
     ds = None
 
-    if args.is_splitted:
-        ds = parse_splitted(path=args.corpus_path, subset=args.corpus_subset)
-    elif args.is_wmt:
-        ds = parse_wmt_splitted(path=args.corpus_path, split_set=args.split)
+    if args.is_lang:
+        ds = parse_swahili(args.corpus_path)(path=args.corpus_path)
     else:
         ds = parse_pilecorpus(path=args.corpus_path, start_seed=args.random_seed)
 
     print("Length:", len(ds))
    
     seq_len = 256
-    top_k = 40
+    # top_k = 40
 
     print("Loading models...")
     
@@ -56,12 +133,12 @@ def main(args):
     tokenizer.padding_side = "left"
     tokenizer.pad_token = tokenizer.eos_token
 
-    model = None
+    # model = None
 
-    if args.is_mamba:
-        model = MambaForCausalLM.from_pretrained(args.model, return_dict=True).to(device)
-    else:
-        model = GPTNeoXForCausalLM.from_pretrained(args.model, return_dict=True).to(device)
+    # if args.is_mamba:
+    #     model = MambaForCausalLM.from_pretrained(args.model, return_dict=True).to(device)
+    # else:
+    model = GPTNeoXForCausalLM.from_pretrained(args.model, return_dict=True).to(device)
 
     model.eval()
 
@@ -72,7 +149,10 @@ def main(args):
     generated_texts = []
 
     for sample in ds[:3]: #Start small for checking
-        important_words = get_words_to_mask(sample, tokenizer)
+        if args.is_lang=="swa":
+            important_words = get_words_to_mask(sample, tokenizer)
+        else: 
+            important_words = get_words_to_mask_fin(sample, tokenizer)
         masked_text, masked_values = mask_text(sample, important_words)
         masked_dataset.append(masked_text)
         masked_values_list.append(masked_values)
@@ -93,6 +173,16 @@ def main(args):
         print(f"Masked Values: {values}\n")
         print("="*80)
 
+output_csv = f'mask_attack_{args.model}_{args.name_tag}.csv'
+with open(output_csv, 'w', newline='') as csvfile:
+    fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list, prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
+        writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+
+    print("Results saved to ", output_csv)
+
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--N', type=int, default=1000, help="Number of samples to generate")
@@ -102,10 +192,8 @@ def parse_arguments(argv):
     parser.add_argument('--corpus-subset', type=str, required=False, help="Data subset if using splitted data")
     parser.add_argument('--name-tag', type=str, required=False, help="Name tag for the output")
     parser.add_argument('--random-seed', type=int, required=False, help="Random seed for dataset shuffling")
-    parser.add_argument('--split', type=str, required=False, help="Split for dataset")
-    parser.add_argument('--is-mamba', action='store_true', help="Use MambaForCausalLM model")
-    parser.add_argument('--is-splitted', action='store_true', help="Use splitted dataset parsing")
-    parser.add_argument('--is-wmt', action='store_true', help="Use WMT dataset parsing")
+    parser.add_argument('--is-lang', help="Use swahili or finnish")
+    
 
     return parser.parse_args(argv)
 
