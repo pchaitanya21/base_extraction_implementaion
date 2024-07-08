@@ -187,7 +187,7 @@ def parse_arguments(argv):
     parser.add_argument('--N', type=int, default=1000, help="Number of samples to generate")
     parser.add_argument('--batch-size', type=int, default=10, help="Batch size for generation")
     parser.add_argument('--model', type=str, required=True, help="Hugging Face model name")
-    parser.add_argument('--corpus-path', type=str, required=True, help="Path to the corpus dataset")
+    # parser.add_argument('--corpus-path', type=str, required=True, help="Path to the corpus dataset")
     # parser.add_argument('--corpus-subset', type=str, required=False, help="Data subset if using splitted data")
     parser.add_argument('--name-tag', type=str, required=False, help="Name tag for the output")
     # parser.add_argument('--random-seed', type=int, required=False, help="Random seed for dataset shuffling")
