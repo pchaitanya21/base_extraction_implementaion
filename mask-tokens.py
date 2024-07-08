@@ -10,13 +10,14 @@ from datasets import load_dataset
 from transformers import MambaForCausalLM, AutoTokenizer, GPTNeoXForCausalLM, AutoModelForMaskedLM, pipeline
 from model_utils import calculate_perplexity, print_best, parse_pilecorpus, device
 import stanza
-from transformers import pipeline
 
-# Download the Swahili model for Stanza
+ # Download the Swahili model for Stanza
 stanza.download('fi')
 # Initialize the Swahili pipeline
+# if args.is_lang=="swa":
+# nlp = pipeline("ner", model="Davlan/xlm-roberta-base-ner-hrl")
+    # else:
 nlp = stanza.Pipeline('fi')
-nlp_swa = pipeline("ner", model="Davlan/xlm-roberta-base-ner-hrl")
 
 def parse_swahili(path):
     file_content=""
@@ -45,7 +46,7 @@ def get_words_to_mask(text, tokenizer):
     # tokens = tokenizer.tokenize(text)
     # words = [tokenizer.convert_tokens_to_string([token]) for token in tokens]
     # unique_words = list(set(words))
-    entities = nlp_swa(text)
+    entities = nlp(text)
     unique_words = [entity['word'].replace('▁', '').lstrip('_') for entity in entities if entity['entity'].startswith('B-') or entity['entity'].startswith('I-')]
     
     return unique_words
@@ -64,52 +65,45 @@ def get_words_to_mask_fin(text, tokenizer):
                 unique_words.append(word.text)
     return unique_words
 
-# def mask_text(text, important_words, max_masks=4, mask_ratio=0.5):
-#     words = text.split()
-#     masked_words = []
-#     masked_values = []
-    
-#     # Determine the number of tokens to mask, up to max_masks
-#     num_to_mask = min(max_masks, len(important_words))
-    
-#     # Randomly select tokens to mask
-#     tokens_to_mask = random.sample(important_words, k=num_to_mask)
-    
-#     for word in words:
-#         # Check if word should be masked
-#         if word in tokens_to_mask and random.random() < mask_ratio:
-#             masked_values.append(word)
-#             masked_words.append('<mask>')
-#             # Remove word from tokens_to_mask to prevent multiple masking
-#             tokens_to_mask.remove(word)
-#         else:
-#             masked_words.append(word)
-    
-#     masked_text = ' '.join(masked_words)
-#     return masked_text, masked_values
-
-# # Example usage
-# text = "Rais Uhuru Kenyatta alikutana na Waziri Mkuu wa Tanzania, Kassim Majaliwa, mjini Dar es Salaam."
-# important_words = ['Uhuru', 'Kenyatta', 'Tanzania', 'Kassim', 'Majaliwa', 'Dar', 'Salaam']
-
-# masked_text, masked_values = mask_text(text, important_words)
-# print('Masked Text:', masked_text)
-# print('Masked Values:', masked_values)
-
-def mask_text(text, important_words, mask_ratio=0.5):
+def mask_text(text, important_words, max_masks=4, mask_ratio=0.5):
     words = text.split()
     masked_words = []
     masked_values = []
     
+    # Determine the number of tokens to mask, up to max_masks
+    num_to_mask = min(max_masks, len(important_words))
+    
+    # Randomly select tokens to mask
+    tokens_to_mask = random.sample(important_words, k=num_to_mask)
+    
     for word in words:
-        if word in important_words and random.random() < mask_ratio:
+        # Check if word should be masked
+        if word in tokens_to_mask and random.random() < mask_ratio:
             masked_values.append(word)
             masked_words.append('<mask>')
+            # Remove word from tokens_to_mask to prevent multiple masking
+            tokens_to_mask.remove(word)
         else:
             masked_words.append(word)
     
     masked_text = ' '.join(masked_words)
     return masked_text, masked_values
+
+
+# def mask_text(text, important_words, mask_ratio=0.5):
+#     words = text.split()
+#     masked_words = []
+#     masked_values = []
+    
+#     for word in words:
+#         if word in important_words and random.random() < mask_ratio:
+#             masked_values.append(word)
+#             masked_words.append('<mask>')
+#         else:
+#             masked_words.append(word)
+    
+#     masked_text = ' '.join(masked_words)
+#     return masked_text, masked_values
 
 def main(args):
     print(f"Using device: {device}")
@@ -117,16 +111,16 @@ def main(args):
 
     ds = None
 
-    if args.is_lang:
-        ds = parse_swahili(args.corpus_path)(path=args.corpus_path)
-    else:
-        ds = parse_pilecorpus(path=args.corpus_path, start_seed=args.random_seed)
+    # if args.is_lang:
+    #     ds = parse_swahili(path=args.corpus_path)
+    # else:
+    #     ds = parse_pilecorpus(path=args.corpus_path, start_seed=args.random_seed)
 
     print("Length:", len(ds))
    
     seq_len = 256
     # top_k = 40
-
+   
     print("Loading models...")
     
     tokenizer = AutoTokenizer.from_pretrained(args.model)
@@ -149,10 +143,10 @@ def main(args):
     generated_texts = []
 
     for sample in ds[:3]: #Start small for checking
-        if args.is_lang=="swa":
-            important_words = get_words_to_mask(sample, tokenizer)
-        else: 
-            important_words = get_words_to_mask_fin(sample, tokenizer)
+        # if args.is_lang=="swa":
+        # important_words = get_words_to_mask(sample, tokenizer)
+        # else: 
+        important_words = get_words_to_mask_fin(sample, tokenizer)
         masked_text, masked_values = mask_text(sample, important_words)
         masked_dataset.append(masked_text)
         masked_values_list.append(masked_values)
@@ -173,13 +167,13 @@ def main(args):
         print(f"Masked Values: {values}\n")
         print("="*80)
 
-output_csv = f'mask_attack_{args.model}_{args.name_tag}.csv'
-with open(output_csv, 'w', newline='') as csvfile:
-    fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for sample,prompt,suff, mem, xl, s, lower, zlib_ in zip(samples, prompts_list, prompt_suffix, comparison_result, scores["XL"], scores["S"], scores["Lower"], scores["zlib"]):
-        writer.writerow({'sample': sample, 'prompt': prompt, 'suffix': suff, 'memorized': mem, 'PPL_XL': xl, 'PPL_S': s, 'PPL_Lower': lower, 'Zlib': zlib_})
+    output_csv = f'mask_attack_{args.model}_{args.name_tag}.csv'
+    with open(output_csv, 'w', newline='') as csvfile:
+        fieldnames = ['sample', 'prompt', 'suffix', 'memorized', 'PPL_XL', 'PPL_S', 'PPL_Lower', 'Zlib']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for original,masked,generated, masked_values in zip(ds, masked_dataset, generated_texts,  masked_values_list ):
+            writer.writerow({'original': original, 'masked': masked, 'generated': generated, 'masked_values': masked_values_list})
 
     print("Results saved to ", output_csv)
 
@@ -189,10 +183,10 @@ def parse_arguments(argv):
     parser.add_argument('--batch-size', type=int, default=10, help="Batch size for generation")
     parser.add_argument('--model', type=str, required=True, help="Hugging Face model name")
     parser.add_argument('--corpus-path', type=str, required=True, help="Path to the corpus dataset")
-    parser.add_argument('--corpus-subset', type=str, required=False, help="Data subset if using splitted data")
+    # parser.add_argument('--corpus-subset', type=str, required=False, help="Data subset if using splitted data")
     parser.add_argument('--name-tag', type=str, required=False, help="Name tag for the output")
-    parser.add_argument('--random-seed', type=int, required=False, help="Random seed for dataset shuffling")
-    parser.add_argument('--is-lang', help="Use swahili or finnish")
+    # parser.add_argument('--random-seed', type=int, required=False, help="Random seed for dataset shuffling")
+    # parser.add_argument('--is-lang', help="Use swahili or finnish")
     
 
     return parser.parse_args(argv)
