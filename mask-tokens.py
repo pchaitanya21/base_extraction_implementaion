@@ -10,8 +10,9 @@ import csv
 import stanza
 from datasets import load_dataset
 from transformers import MambaForCausalLM, AutoTokenizer, GPTNeoXForCausalLM, AutoModelForMaskedLM, pipeline
-from model_utils import calculate_perplexity, print_best, parse_pilecorpus, device
+# from model_utils import calculate_perplexity, print_best, parse_pilecorpus, device
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
  # Download the Swahili model for Stanza
 stanza.download('fi')
