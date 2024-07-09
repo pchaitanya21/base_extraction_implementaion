@@ -28,7 +28,8 @@ conda activate myenv
 
 # Install required packages
 pip install -r requirements.txt
-
+pip uninstall transformers
+pip install transformers==4.41.0
 # Run the main script
 python mask-tokens-ed.py --N 10000 --batch-size 10 --model EleutherAI/pythia-1.4b --name-tag pythia1.4finmaskedattack
 

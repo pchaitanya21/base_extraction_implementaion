@@ -1,5 +1,5 @@
 torch
-transformers
+# transformers
 numpy
 tqdm
 zstandard
