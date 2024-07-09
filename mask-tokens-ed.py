@@ -112,7 +112,7 @@ def main(args):
     print("Loading dataset...")
 
     ds = None
-    df = pd.read_csv('output_scores_EleutherAI_pythia-2.8b_EleutherAI_pythia-2.8b_pythia2.8bfin150.csv')
+    df = pd.read_csv('pythia2.8bfin150.csv')
 
     # Extract the 'prompt' column and save it to a list called ds
     ds = df['prompt'].tolist()
