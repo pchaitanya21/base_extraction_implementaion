@@ -31,7 +31,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000fin_quant.py --N 10000 --batch-size 10 --model1 RichardErkhov/EleutherAI_-_pythia-2.8b-v0-8bits --model2 RichardErkhov/EleutherAI_-_pythia-2.8b-v0-8bits --corpus-path fin_sample.txt --name-tag pythiafin2.8quant150
+python main_load_input10000fin_quant.py --N 10000 --batch-size 10 --model1 RichardErkhov/EleutherAI_-_pythia-2.8b-v0-8bits --model2 RichardErkhov/EleutherAI_-_pythia-2.8b-v0-8bits --corpus-path fin_sample.txt --name-tag pythiafin2.8quant150run2
 #python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --cor
 
 conda deactivate 
