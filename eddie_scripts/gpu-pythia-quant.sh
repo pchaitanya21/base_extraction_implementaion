@@ -23,7 +23,7 @@ source /exports/eddie/scratch/s2605274/miniconda3/etc/profile.d/conda.sh
 cd /exports/eddie/scratch/s2605274/base_extraction_implementaion/
 #conda remove --name extract --all
 
-conda create -n pythia python=3.9 
+# conda create -n myenv python=3.9 
 
 conda activate myenv
 
