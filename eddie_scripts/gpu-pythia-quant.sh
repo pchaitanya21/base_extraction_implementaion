@@ -7,7 +7,7 @@
 #$ -cwd
 #$ -P lel_hcrc_cstr_students
 #$ -q gpu
-#$ -pe gpu-a100 2
+#$ -pe gpu-a100 1
 #$ -l h_vmem=500G
 #$ -l h_rt=24:00:00
 #$ -m bea -M s2605274@ed.ac.uk 
