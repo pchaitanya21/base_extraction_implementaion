@@ -9,7 +9,7 @@
 #$ -q gpu
 #$ -pe gpu-a100 1
 #$ -l h_vmem=500G
-#$ -l h_rt=48:00:00
+#$ -l h_rt=24:00:00
 #$ -m bea -M s2605274@ed.ac.uk 
 
 export HF_HOME="/exports/eddie/scratch/s2605274/.cache/huggingface_cache"
