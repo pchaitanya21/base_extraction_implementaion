@@ -36,7 +36,7 @@ def deduplicate_text(file_path, output_path, min_length=50):
         file.write(deduplicated_text)
 
 # Define file paths
-input_file = 'swa_sample.txt'
+input_file = '/exports/eddie/scratch/s2605274/base_extraction_implementation/swa_sample.txt'
 output_file = 'swa_dedup.txt'
 
 # Deduplicate the text
