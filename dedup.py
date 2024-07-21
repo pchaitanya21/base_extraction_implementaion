@@ -1,6 +1,6 @@
 import re
 
-def deduplicate_text(file_path, output_path, min_length=25):
+def deduplicate_text(file_path, output_path, min_length=50):
     # Read the text file
     with open(file_path, 'r', encoding='utf-8') as file:
         text = file.read()
