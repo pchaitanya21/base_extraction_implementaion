@@ -41,9 +41,9 @@ def main(args):
     # model2 = GPTNeoXForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
     # model2.eval()
     #for gpt-neo
-    model1 = AutoModelForCausalLM.from_pretrained(args.model1, return_dict=True).to(device)
+    model1 = AutoModelForCausalLM.from_pretrained(args.model1, return_dict=True, force_download=True).to(device)
     model1.config.pad_token_id = model1.config.eos_token_id
-    model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True).to(device)
+    model2 = AutoModelForCausalLM.from_pretrained(args.model2, return_dict=True, force_download=True).to(device)
     model2.eval()
 
     samples = []
@@ -57,7 +57,7 @@ def main(args):
     with tqdm(total=args.N) as pbar:
         for _ in range(num_batches):
             #input_len 25 works pile
-            input_len = 50 
+            input_len = 150 
             input_ids = []
             attention_mask = []
             
@@ -84,6 +84,8 @@ def main(args):
                 token_ids= tokenized_chunk['input_ids'][0]
 
                 prompt_ids= token_ids[:input_len]
+                if prompt_ids.shape[0] < input_len:
+                    continue
                 prompt= tokenizer.decode(prompt_ids, skip_special_tokens=True)
                 # print("the lenght of tokenized prompt is:", len(inputs))
                 # print(inputs)
