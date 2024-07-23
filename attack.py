@@ -261,8 +261,8 @@ for text in tqdm(texts[args.proc_id*batch_size:(args.proc_id+1)*batch_size]):
         end = time.time()
         print("generating neighbours took seconds:", end-start)
 
-
-        for i, neighbours in enumerate([one_word_neighbours]):
+        # one_word_neighbours
+        for i, neighbours in enumerate([neighbours]):
             neighbours_texts = []
             for n in neighbours:
                 neighbours_texts.append((n[0].replace(" [SEP]", " ").replace("[CLS] ", " "), n[1]))
