@@ -8,6 +8,7 @@ from heapq import nlargest
 import argparse
 import pickle
 import time
+from datasets import load_dataset
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--proc-id', type=int)
@@ -16,6 +17,39 @@ parser.add_argument('--dataset', type=str, choices=['swa', 'fin', 'eng'])
 args = parser.parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+def parse_pilecorpus(path):
+    """
+    Quick and ugly parsing of a WET file.
+    Tested for the May 2021 crawl.
+    """
+    # with open(wet_file) as f:
+        # lines = f.readlines() 
+    
+    # start_idxs = [i for i in range(len(lines)) if "WARC/1.0" in lines[i]]
+    
+    all_texts = ""
+    dataset = load_dataset(path, split="train", streaming=True)
+    shuffled_dataset = dataset.shuffle(seed=42)
+    #len(dataset['train'])
+    dataset_head= shuffled_dataset.skip(0)
+    dataset_head = shuffled_dataset.take(1000000)
+    for text in dataset_head:
+        all_texts+= text['text']
+    # for i in range(10):
+      # all_texts+= dataset['train']['translation'][i]['bg']
+      # print("done")
+      # all_texts+= dataset['train']['translation'][i]['cs']
+    # count_eng = 0
+    # for i in range(len(start_idxs)-1):
+    #     start = start_idxs[i]
+    #     end = start_idxs[i+1]
+    #     if "WARC-Identified-Content-Language: eng" in lines[start+7]:
+    #         count_eng += 1
+    #         for j in range(start+10, end):
+    #             all_eng += lines[j]
+
+    return all_texts
 
 def parse_lang(path):
     file_content=""
@@ -42,11 +76,11 @@ def parse_lang(path):
 attack_tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 attack_tokenizer.pad_token = attack_tokenizer.eos_token
 
-if args.dataset == 'twitter':
+if args.dataset == 'eng':
     attack_model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
-elif args.dataset == 'news':
+elif args.dataset == 'fin':
     attack_model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
-elif args.dataset == 'wiki':
+elif args.dataset == 'swa':
     attack_model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
 
 attack_model = attack_model.to('cuda:0')
@@ -70,9 +104,9 @@ search_model = search_model.to('cuda:1')
 token_dropout = torch.nn.Dropout(p=0.7)
 
 if args.dataset == 'eng':
-    texts = parse_lang('swa_sample.txt')
+    texts = parse_pilecorpus('monology/pile-uncopyrighted')
 elif args.dataset == 'fin':
-    texts = parse_lang('swa_sample.txt')
+    texts = parse_lang('fin_sample.txt')
 elif args.dataset == 'swa':
     texts = parse_lang('swa_sample.txt')
 
@@ -203,11 +237,11 @@ def get_logprob_batch(text):
 
 all_scores = []
 
-if args.dataset == 'twitter':
+if args.dataset == 'eng':
     batch_size = 3000
-elif args.dataset == 'news':
+elif args.dataset == 'fin':
     batch_size = 1200
-elif args.dataset == 'wiki':
+elif args.dataset == 'swa':
     batch_size = 1200
 for text in tqdm(texts[args.proc_id*batch_size:(args.proc_id+1)*batch_size]):
     attack_model.eval()
