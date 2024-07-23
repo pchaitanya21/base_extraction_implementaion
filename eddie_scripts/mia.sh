@@ -24,6 +24,6 @@ conda activate myenv
 
 pip install -r requirements.txt
 
-python attack.py --proc-id 0 --model bert --dataset news
+python attack.py --proc-id 0 --model bert --dataset swa
 
 conda deactivate
