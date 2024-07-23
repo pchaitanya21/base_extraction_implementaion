@@ -12,51 +12,32 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument('--proc-id', type=int)
 parser.add_argument('--model', type=str, choices=['bert', 'distilbert', 'roberta'])
-parser.add_argument('--dataset', type=str, choices=['news', 'twitter', 'wiki'])
+parser.add_argument('--dataset', type=str, choices=['swa', 'fin', 'eng'])
 args = parser.parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def get_all_texts(file):
-    df = pd.read_csv(file, header=None)
-    texts = df[2].to_list()
-    texts = [t.replace("\\", " ") for t in texts]
-    print(texts[:10])
+def parse_lang(path):
+    file_content=""
+    chunk_size = 10 * 1024 * 1024  # 10 MB
 
-    return texts
-
-
-
-def get_all_tweets():
-    df = pd.read_csv("tweets.csv", header=None, on_bad_lines='skip', encoding='ISO-8859-1')
-    texts = df[5].to_list()[:800000]
-    texts = [t for t in texts if len(t) > 65][:300000]
-    print("length", len(texts))
-    print(texts[:10])
-
-    return texts
-
-
-def get_all_texts_wikitext(split = "train"):
-
-    with open('wikitext.txt') as f:
-        sentences = f.readlines()
-
-    if split == "train":
-        sentences = sentences[:100000]
-
-    elif split == "test":
-        sentences = sentences[100000:200000]
+    try:
+        # Open the file in read mode
+        with open(path, 'r', encoding='utf-8') as file:
+            while True:
+                # Read the next chunk from the file
+                chunk = file.read(chunk_size)
+                if not chunk:
+                    break  # End of file reached
+                # Append the chunk to the file content string
+                file_content += chunk
+        print("File read successfully.")
+    except FileNotFoundError:
+        print(f"The file at {path} was not found.")
+    except IOError as e:
+        print(f"An error occurred while reading the file at {path}: {e}")
     
-    elif split == "alt":
-        sentences = sentences[200000:300000]
-
-    sentences = [s for s in sentences if len(s) > 25][:5000]
-
-    return sentences
-
-
-
+    return file_content
 
 attack_tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 attack_tokenizer.pad_token = attack_tokenizer.eos_token
@@ -88,12 +69,12 @@ search_model = search_model.to('cuda:1')
 
 token_dropout = torch.nn.Dropout(p=0.7)
 
-if args.dataset == 'twitter':
-    texts = get_all_tweets()
-elif args.dataset == 'news':
-    texts = get_all_texts('news.csv')
-elif args.dataset == 'wiki':
-    texts = get_all_texts_wikitext("train")[1200:1800]+get_all_texts_wikitext("alt")[1200:1800]
+if args.dataset == 'eng':
+    texts = parse_lang('swa_sample.txt')
+elif args.dataset == 'fin':
+    texts = parse_lang('swa_sample.txt')
+elif args.dataset == 'swa':
+    texts = parse_lang('swa_sample.txt')
 
 
 
