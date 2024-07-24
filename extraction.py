@@ -92,7 +92,7 @@ def parse_pilecorpus(path):
     # start_idxs = [i for i in range(len(lines)) if "WARC/1.0" in lines[i]]
     
     all_texts = ""
-    dataset = load_dataset(path, split="train", streaming=True)
+    dataset = load_dataset("ArmelR/the-pile-splitted", "Pile-CC", streaming=True)
     shuffled_dataset = dataset.shuffle(seed=42)
     #len(dataset['train'])
     dataset_head= shuffled_dataset.skip(0)
