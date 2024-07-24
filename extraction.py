@@ -81,37 +81,55 @@ def parse_swahili(path):
     # all_texts = ""
     # for text in dataset_head:
     #     all_texts+= text['text']
+    
+# def parse_pilecorpus(path):
+#     """
+#     Quick and ugly parsing of a WET file.
+#     Tested for the May 2021 crawl.
+#     """
+#     # with open(wet_file) as f:
+#         # lines = f.readlines() 
+    
+#     # start_idxs = [i for i in range(len(lines)) if "WARC/1.0" in lines[i]]
+    
+#     all_texts = ""
+#     dataset = load_dataset(path, split="train", streaming=True)
+#     shuffled_dataset = dataset.shuffle(seed=42)
+#     #len(dataset['train'])
+#     dataset_head= shuffled_dataset.skip(0)
+#     dataset_head = shuffled_dataset.take(1000000)
+#     for text in dataset_head:
+#         all_texts+= text['text']
+#     # for i in range(10):
+#       # all_texts+= dataset['train']['translation'][i]['bg']
+#       # print("done")
+#       # all_texts+= dataset['train']['translation'][i]['cs']
+#     # count_eng = 0
+#     # for i in range(len(start_idxs)-1):
+#     #     start = start_idxs[i]
+#     #     end = start_idxs[i+1]
+#     #     if "WARC-Identified-Content-Language: eng" in lines[start+7]:
+#     #         count_eng += 1
+#     #         for j in range(start+10, end):
+#     #             all_eng += lines[j]
+
+#     return all_texts
+
 def parse_pilecorpus(path):
     """
     Quick and ugly parsing of a WET file.
     Tested for the May 2021 crawl.
     """
-    # with open(wet_file) as f:
-        # lines = f.readlines() 
-    
-    # start_idxs = [i for i in range(len(lines)) if "WARC/1.0" in lines[i]]
-    
     all_texts = ""
     dataset = load_dataset("ArmelR/the-pile-splitted", "Pile-CC", streaming=True)
-    shuffled_dataset = dataset.shuffle(seed=42)
-    #len(dataset['train'])
-    dataset_head= shuffled_dataset.skip(0)
-    dataset_head = shuffled_dataset.take(1000000)
-    for text in dataset_head:
-        all_texts+= text['text']
-    # for i in range(10):
-      # all_texts+= dataset['train']['translation'][i]['bg']
-      # print("done")
-      # all_texts+= dataset['train']['translation'][i]['cs']
-    # count_eng = 0
-    # for i in range(len(start_idxs)-1):
-    #     start = start_idxs[i]
-    #     end = start_idxs[i+1]
-    #     if "WARC-Identified-Content-Language: eng" in lines[start+7]:
-    #         count_eng += 1
-    #         for j in range(start+10, end):
-    #             all_eng += lines[j]
+    shuffled_dataset = dataset['train'].shuffle(seed=42)  # Shuffle the 'train' split
 
+    # Use 'skip' and 'take' on the individual dataset
+    dataset_head = shuffled_dataset.skip(0).take(1000000)
+    
+    for text in dataset_head:
+        all_texts += text['text']
+    
     return all_texts
 
 
