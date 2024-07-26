@@ -1,43 +1,36 @@
 import re
 
-def deduplicate_text(file_path, output_path, min_length=50):
-    # Read the text file
-    with open(file_path, 'r', encoding='utf-8') as file:
-        text = file.read()
-    
-    # Dictionary to track positions and counts of substrings
-    substr_counts = {}
-    deduplicated_text = text
-    substr_length = min_length
+def tokenize(text):
+    """
+    Tokenizes the input text into words.
+    """
+    # Simple word tokenization (can be replaced with a more advanced tokenizer if needed)
+    return re.findall(r'\b\w+\b', text)
 
-    # Sliding window to extract all substrings of length min_length
-    for i in range(len(text) - substr_length + 1):
-        substr = text[i:i + substr_length]
-        if substr in substr_counts:
-            substr_counts[substr].append(i)
-        else:
-            substr_counts[substr] = [i]
+def process_file(input_file, output_file, min_tokens=20):
+    """
+    Reads the input file, deduplicates sentences longer than min_tokens,
+    and writes the result to the output file.
+    """
+    seen_sentences = set()
+    deduplicated_sentences = []
 
-    # Create a list of positions to be removed
-    remove_positions = []
-    for substr, positions in substr_counts.items():
-        if len(positions) > 1:
-            remove_positions.extend(positions[1:])
-    
-    # Sort positions in reverse order to avoid shifting issues
-    remove_positions.sort(reverse=True)
-    
-    # Remove repeated substrings
-    for pos in remove_positions:
-        deduplicated_text = deduplicated_text[:pos] + deduplicated_text[pos + substr_length:]
-    
-    # Write the cleaned text to a new file
-    with open(output_path, 'w', encoding='utf-8') as file:
-        file.write(deduplicated_text)
+    with open(input_file, 'r', encoding='utf-8') as file:
+        for line in file:
+            sentences = re.split(r'(?<=[.!?]) +', line.strip())
+            for sentence in sentences:
+                tokens = tokenize(sentence)
+                if len(tokens) > min_tokens:
+                    sentence_normalized = ' '.join(tokens)
+                    if sentence_normalized not in seen_sentences:
+                        seen_sentences.add(sentence_normalized)
+                        deduplicated_sentences.append(sentence)
 
-# Define file paths
-input_file = '/exports/eddie/scratch/s2605274/base_extraction_implementation/swa_sample.txt'
-output_file = 'swa_dedup.txt'
+    with open(output_file, 'w', encoding='utf-8') as file:
+        for sentence in deduplicated_sentences:
+            file.write(sentence + '\n')
 
-# Deduplicate the text
-deduplicate_text(input_file, output_file)
+# Example usage
+input_file = '/content/drive/MyDrive/fin_sample.txt'  # Path to your input file
+output_file = 'fin_dedup_20.txt'  # Path to your output file
+process_file(input_file, output_file)
