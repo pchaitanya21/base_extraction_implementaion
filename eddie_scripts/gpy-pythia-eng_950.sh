@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Use the variable for the job name and log/error files
-#$ -N Pythia-cc-eng-1.4-450
+#$ -N Pythia-cc-eng-1.4-950
 #$ -o /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-eng1.4_$JOB_ID.log
 #$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-eng1.4_$JOB_ID.err
 #$ -cwd
@@ -31,7 +31,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input10000eng_450.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-1.4b --model2 EleutherAI/pythia-1.4b --corpus-path monology/pile-uncopyrighted --name-tag pythia1.4cceng450
+python main_load_input10000eng_950.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-1.4b --model2 EleutherAI/pythia-1.4b --corpus-path monology/pile-uncopyrighted --name-tag pythia1.4cceng950
 #python main.py --N 1000 --batch-size 10 --model1 EleutherAI/pythia-2.8b --model2 EleutherAI/pythia-410m --cor
 
 conda deactivate 
