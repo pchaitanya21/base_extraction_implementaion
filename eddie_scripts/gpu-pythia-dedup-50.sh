@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Use the variable for the job name and log/error files
-#$ -N Pythia-2.8b-swa_dedup50
+#$ -N Pythia-2.8b-fin_dedup50
 #$ -o /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.log
 #$ -e /exports/eddie/scratch/s2605274/job_runs/EDDIE-pythia-2.8b_$JOB_ID.err
 #$ -cwd
@@ -30,7 +30,7 @@ conda activate myenv
 pip install -r requirements.txt
 
 # Run the main script
-python main_load_input_fin.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b-deduped --model2 EleutherAI/pythia-2.8b-deduped --corpus-path swa_dedup_50.txt --name-tag pythia2.8bswa_dedup50_150
+python main_load_input_fin.py --N 10000 --batch-size 10 --model1 EleutherAI/pythia-2.8b-deduped --model2 EleutherAI/pythia-2.8b-deduped --corpus-path fin_dedup_50.txt --name-tag pythia2.8bfin_dedup50_150
 
 # Deactivate conda environment
 conda deactivate
